@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeekendWhere SG - Design System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #FAF9F6;
+            color: #1a1a1a;
+            line-height: 1.6;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #3C5D4F;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            color: #3C5D4F;
+            border-bottom: 2px solid #3C5D4F;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Color Swatches */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .color-swatch {
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .color-swatch .color-box {
+            width: 100%;
+            height: 80px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .color-swatch .color-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .color-swatch .color-hex {
+            font-size: 12px;
+            color: #666;
+            font-family: monospace;
+        }
+
+        /* Primary */
+        .primary { background: #3C5D4F; }
+        .secondary { background: #D4A574; }
+        .accent { background: #E63946; }
+        .orchid { background: #9B5DE5; }
+
+        /* Semantic */
+        .success { background: #2E8B57; }
+        .warning { background: #FF8C42; }
+        .error { background: #DC2626; }
+        .neutral { background: #6B7280; }
+
+        /* Typography */
+        .type-scale {
+            margin: 16px 0;
+        }
+
+        .type-scale .sample {
+            margin: 8px 0;
+        }
+
+        .type-scale .label {
+            font-size: 12px;
+            color: #666;
+            font-family: monospace;
+            margin-left: 8px;
+        }
+
+        /* Components */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 300ms ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-primary {
+            background: #9B5DE5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 12px rgba(155, 93, 229, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #3C5D4F;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 4px 12px rgba(60, 93, 79, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-accent {
+            background: #E63946;
+            color: white;
+        }
+
+        .btn-accent:hover {
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 300ms ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-verdict {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card-verdict.perfect {
+            background: #2E8B57;
+            color: white;
+        }
+
+        .card-verdict.great {
+            background: #3C5D4F;
+            color: white;
+        }
+
+        .card-verdict.good {
+            background: #9B5DE5;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .card-region {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .card-score {
+            font-size: 28px;
+            font-weight: 700;
+            color: #3C5D4F;
+            margin-bottom: 12px;
+        }
+
+        .card-score-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #666;
+        }
+
+        .card-reasons {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card-reasons li {
+            font-size: 14px;
+            color: #666;
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .card-reasons li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #3C5D4F;
+        }
+
+        /* Badges */
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #2E8B57;
+            color: white;
+        }
+
+        .badge-primary {
+            background: #3C5D4F;
+            color: white;
+        }
+
+        .badge-warning {
+            background: #FF8C42;
+            color: white;
+        }
+
+        .badge-neutral {
+            background: #6B7280;
+            color: white;
+        }
+
+        /* Selectors */
+        .selector-group {
+            margin-top: 16px;
+        }
+
+        .selector {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px 16px;
+            border: 1px solid #D4A574;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .selector:focus {
+            outline: 2px solid #9B5DE5;
+            outline-offset: 2px;
+        }
+
+        /* States */
+        .state-demo {
+            padding: 24px;
+            border-radius: 6px;
+            margin-top: 16px;
+        }
+
+        .state-loading {
+            background: #FAF9F6;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3C5D4F;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .state-error {
+            background: #FEF2F2;
+            border: 1px solid #DC2626;
+        }
+
+        .state-empty {
+            background: #FAF9F6;
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        /* Spacing */
+        .spacing-demo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .spacing-box {
+            background: #3C5D4F;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+
+        .spacing-label {
+            font-size: 12px;
+            color: #666;
+            font-family: monospace;
+        }
+
+        /* Border Radius */
+        .radius-demo {
+            display: flex;
+            gap: 16px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .radius-box {
+            width: 80px;
+            height: 80px;
+            background: #3C5D4F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        /* Shadows */
+        .shadow-demo {
+            display: flex;
+            gap: 24px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .shadow-box {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .shadow-md { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .shadow-lg { box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+
+        /* Code block */
+        .code {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 16px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        .code .comment {
+            color: #6B7280;
+        }
+
+        .code .keyword {
+            color: #9B5DE5;
+        }
+
+        .code .string {
+            color: #2E8B57;
+        }
+
+        .code .number {
+            color: #FF8C42;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e5e5;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌴 WeekendWhere SG</h1>
+        <p class="subtitle">Design System Reference • Singapore-Centric Design Tokens</p>
+
+        <!-- Colors -->
+        <h2>🎨 Color Palette</h2>
+        
+        <div class="section">
+            <h3>Brand Colors</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box primary"></div>
+                    <div class="color-name">Tropical Green (Primary)</div>
+                    <div class="color-hex">#3C5D4F</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box secondary"></div>
+                    <div class="color-name">Warm Wood (Secondary)</div>
+                    <div class="color-hex">#D4A574</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box accent"></div>
+                    <div class="color-name">Singapore Red (Accent)</div>
+                    <div class="color-hex">#E63946</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box orchid"></div>
+                    <div class="color-name">National Orchid (Special)</div>
+                    <div class="color-hex">#9B5DE5</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 24px;">Semantic Colors</h3>
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box success"></div>
+                    <div class="color-name">Success (Perfect Verdict)</div>
+                    <div class="color-hex">#2E8B57</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box warning"></div>
+                    <div class="color-name">Warning</div>
+                    <div class="color-hex">#FF8C42</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box error"></div>
+                    <div class="color-name">Error</div>
+                    <div class="color-hex">#DC2626</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box neutral"></div>
+                    <div class="color-name">Neutral</div>
+                    <div class="color-hex">#6B7280</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Typography -->
+        <h2>📝 Typography Scale</h2>
+        
+        <div class="section">
+            <div class="type-scale">
+                <div class="sample" style="font-size: 32px; font-weight: 700;">
+                    2xl - 32px Bold
+                    <span class="label">font-size: 32px, font-weight: 700</span>
+                </div>
+                <div class="sample" style="font-size: 28px; font-weight: 600;">
+                    xl - 28px Semibold
+                    <span class="label">font-size: 28px, font-weight: 600</span>
+                </div>
+                <div class="sample" style="font-size: 20px; font-weight: 600;">
+                    lg - 20px Semibold
+                    <span class="label">font-size: 20px, font-weight: 600</span>
+                </div>
+                <div class="sample" style="font-size: 18px; font-weight: 400;">
+                    base - 18px Regular
+                    <span class="label">font-size: 18px, font-weight: 400 (body text)</span>
+                </div>
+                <div class="sample" style="font-size: 16px; font-weight: 400;">
+                    sm - 16px Regular
+                    <span class="label">font-size: 16px, font-weight: 400</span>
+                </div>
+                <div class="sample" style="font-size: 14px; font-weight: 400;">
+                    xs - 14px Regular
+                    <span class="label">font-size: 14px, font-weight: 400</span>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 24px;">Font Family</h3>
+            <p style="color: #666; font-family: 'Inter', sans-serif;">
+                Primary: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif<br>
+                Multilingual: Noto Sans (Chinese/Malay/Tamil) for Singapore context
+            </p>
+        </div>
+
+        <!-- Components -->
+        <h2>🧩 Components</h2>
+
+        <div class="section">
+            <h3>Buttons</h3>
+            <div class="button-group">
+                <button class="btn btn-primary">Primary Button</button>
+                <button class="btn btn-secondary">Secondary Button</button>
+                <button class="btn btn-accent">Accent Button</button>
+                <button class="btn btn-primary" disabled>Disabled</button>
+            </div>
+
+            <div class="code">
+<span class="comment">// Tailwind classes for buttons</span>
+btn-primary: bg-[#9B5DE5] hover:shadow-lg transition-all
+btn-secondary: bg-[#3C5D4F] hover:shadow-lg transition-all
+btn-accent: bg-[#E63946] hover:shadow-lg transition-all
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Recommendation Cards</h3>
+            <div class="component-grid">
+                <!-- Card 1: Perfect -->
+                <div class="card">
+                    <span class="card-verdict perfect">Perfect choice</span>
+                    <div class="card-title">East Coast Park</div>
+                    <div class="card-region">East Region</div>
+                    <div class="card-score">
+                        9.5
+                        <span class="card-score-label">/ 10</span>
+                    </div>
+                    <ul class="card-reasons">
+                        <li>Matches selected region</li>
+                        <li>Great for cycling</li>
+                        <li>Park connector available</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: Great -->
+                <div class="card">
+                    <span class="card-verdict great">Great choice</span>
+                    <div class="card-title">Botanic Gardens</div>
+                    <div class="card-region">Central Region</div>
+                    <div class="card-score">
+                        8.0
+                        <span class="card-score-label">/ 10</span>
+                    </div>
+                    <ul class="card-reasons">
+                        <li>Perfect for nature walks</li>
+                        <li>Family-friendly facilities</li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: Good -->
+                <div class="card">
+                    <span class="card-verdict good">Good choice</span>
+                    <div class="card-title">West Coast Park</div>
+                    <div class="card-region">West Region</div>
+                    <div class="card-score">
+                        7.0
+                        <span class="card-score-label">/ 10</span>
+                    </div>
+                    <ul class="card-reasons">
+                        <li>Matches selected region</li>
+                        <li>Good for family outings</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Badges</h3>
+            <div class="badge-group">
+                <span class="badge badge-success">Perfect</span>
+                <span class="badge badge-primary">Great</span>
+                <span class="badge badge-primary">Good</span>
+                <span class="badge badge-warning">Okay</span>
+                <span class="badge badge-neutral">Poor</span>
+                <span class="badge badge-success">Cycling</span>
+                <span class="badge badge-primary">Family</span>
+                <span class="badge badge-warning">Nature</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Selectors (Dropdowns)</h3>
+            <div class="selector-group">
+                <select class="selector">
+                    <option>Where in Singapore?</option>
+                    <option>Central</option>
+                    <option>East</option>
+                    <option>West</option>
+                    <option>North</option>
+                    <option>South</option>
+                </select>
+                <select class="selector">
+                    <option>What are you planning?</option>
+                    <option>Family outing</option>
+                    <option>Walking</option>
+                    <option>Cycling</option>
+                    <option>Nature</option>
+                    <option>Fitness</option>
+                </select>
+                <select class="selector">
+                    <option>What matters most?</option>
+                    <option>Balanced</option>
+                    <option>Weather-safe</option>
+                    <option>Kid-friendly</option>
+                    <option>Long walk</option>
+                    <option>Cycling-friendly</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- States -->
+        <h2>🔄 State Patterns</h2>
+
+        <div class="section">
+            <h3>Loading State</h3>
+            <div class="state-demo state-loading">
+                <div class="spinner"></div>
+                <p style="font-size: 14px; color: #666;">Finding the best spots for you...</p>
+            </div>
+
+            <h3 style="margin-top: 24px;">Error State</h3>
+            <div class="state-demo state-error">
+                <p style="font-size: 14px; color: #DC2626; margin-bottom: 8px;">Using cached recommendations</p>
+                <p style="font-size: 12px; color: #666;">Couldn't fetch live data. Showing previous results for East.</p>
+                <button class="btn btn-secondary" style="margin-top: 12px; padding: 8px 16px; font-size: 12px;">Try again</button>
+            </div>
+
+            <h3 style="margin-top: 24px;">Empty State</h3>
+            <div class="state-demo state-empty">
+                <div class="empty-icon">🔍</div>
+                <p style="font-size: 14px; color: #666; margin-bottom: 8px;">No parks match your criteria.</p>
+                <p style="font-size: 12px; color: #999;">Try a different region or activity</p>
+            </div>
+        </div>
+
+        <!-- Spacing -->
+        <h2>📐 Spacing System</h2>
+
+        <div class="section">
+            <div class="spacing-demo">
+                <div class="spacing-box" style="width: 4px; height: 40px;">4</div>
+                <span class="spacing-label">xs: 4px</span>
+                
+                <div class="spacing-box" style="width: 8px; height: 40px;">8</div>
+                <span class="spacing-label">sm: 8px</span>
+                
+                <div class="spacing-box" style="width: 16px; height: 40px;">16</div>
+                <span class="spacing-label">md: 16px</span>
+                
+                <div class="spacing-box" style="width: 24px; height: 40px;">24</div>
+                <span class="spacing-label">lg: 24px</span>
+                
+                <div class="spacing-box" style="width: 32px; height: 40px;">32</div>
+                <span class="spacing-label">xl: 32px</span>
+            </div>
+        </div>
+
+        <!-- Border Radius -->
+        <h2>🔳 Border Radius</h2>
+
+        <div class="section">
+            <div class="radius-demo">
+                <div class="radius-box" style="border-radius: 4px;">4px</div>
+                <div class="radius-box" style="border-radius: 6px;">6px</div>
+                <div class="radius-box" style="border-radius: 8px;">8px</div>
+                <div class="radius-box" style="border-radius: 12px;">12px</div>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 8px;">
+                Input: 4px | Button: 6px | Card: 8px | Badge: 12px
+            </p>
+        </div>
+
+        <!-- Shadows -->
+        <h2>🌫️ Shadows</h2>
+
+        <div class="section">
+            <div class="shadow-demo">
+                <div class="shadow-box shadow-sm">sm<br>Default card</div>
+                <div class="shadow-box shadow-md">md<br>Hover state</div>
+                <div class="shadow-box shadow-lg">lg<br>Elevated</div>
+            </div>
+        </div>
+
+        <!-- Implementation -->
+        <h2>💻 Implementation Reference</h2>
+
+        <div class="section">
+            <h3>Tailwind Config (Colors)</h3>
+            <div class="code">
+<span class="comment">// tailwind.config.js</span>
+<span class="keyword">module.exports</span> = {
+  theme: {
+    extend: {
+      colors: {
+        primary: <span class="string">'#3C5D4F'</span>,    <span class="comment">// Tropical Green</span>
+        secondary: <span class="string">'#D4A574'</span>,  <span class="comment">// Warm Wood</span>
+        accent: <span class="string">'#E63946'</span>,     <span class="comment">// Singapore Red</span>
+        orchid: <span class="string">'#9B5DE5'</span>,     <span class="comment">// National Orchid</span>
+        success: <span class="string">'#2E8B57'</span>,    <span class="comment">// Perfect verdict</span>
+        warning: <span class="string">'#FF8C42'</span>,    <span class="comment">// Warning state</span>
+        error: <span class="string">'#DC2626'</span>,      <span class="comment">// Error state</span>
+      }
+    }
+  }
+}
+            </div>
+
+            <h3 style="margin-top: 24px;">Verdict Color Mapping</h3>
+            <div class="code">
+<span class="comment">// Score to verdict mapping</span>
+<span class="keyword">const</span> getVerdictColor = (score) => {
+  <span class="keyword">if</span> (score >= <span class="number">9</span>) <span class="keyword">return</span> <span class="string">'#2E8B57'</span>;  <span class="comment">// Perfect (success)</span>
+  <span class="keyword">if</span> (score >= <span class="number">7</span>) <span class="keyword">return</span> <span class="string">'#3C5D4F'</span>;  <span class="comment">// Great (primary)</span>
+  <span class="keyword">if</span> (score >= <span class="number">5</span>) <span class="keyword">return</span> <span class="string">'#9B5DE5'</span>;  <span class="comment">// Good (orchid)</span>
+  <span class="keyword">if</span> (score >= <span class="number">3</span>) <span class="keyword">return</span> <span class="string">'#FF8C42'</span>;  <span class="comment">// Okay (warning)</span>
+  <span class="keyword">return</span> <span class="string">'#6B7280'</span>;                  <span class="comment">// Poor (neutral)</span>
+};
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>WeekendWhere SG Design System • Singapore-Centric Design</p>
+            <p style="margin-top: 8px;">Based on DESIGN.md • Created for live development reference</p>
+        </div>
+    </div>
+</body>
+</html>

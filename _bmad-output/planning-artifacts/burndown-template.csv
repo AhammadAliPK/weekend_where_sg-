@@ -1,0 +1,26 @@
+# WeekendWhere SG Burndown Chart
+# Daily tracking for sprint progress
+# 
+# Usage: Update 'Actual_Remaining' each day with actual stories remaining
+# 'Ideal_Remaining' is calculated automatically based on linear progress
+#
+# Columns:
+# - Day: Sprint day number
+# - Stories_Completed: Cumulative stories completed
+# - Ideal_Remaining: Target stories remaining (linear progression)
+# - Actual_Remaining: Actual stories remaining (update this)
+# - Velocity: Stories completed on that day
+# - Notes: Any blockers, impediments, or observations
+
+Day,Stories_Completed,Ideal_Remaining,Actual_Remaining,Velocity,Notes
+0,0,17,17,0,Sprint start
+1,,,0,,
+2,,,0,,
+3,,,0,,
+4,,,0,,
+5,,,0,,
+6,,,0,,
+7,,,0,,
+8,,,0,,
+9,,,0,,
+10,,,0,,

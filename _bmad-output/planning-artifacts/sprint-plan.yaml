@@ -1,0 +1,1035 @@
+---
+name: "WeekendWhere SG Sprint Plan"
+version: "1.0.0"
+created: "2026-06-27"
+updated: "2026-06-27"
+project: "weekend_where_sg"
+tracking_period: "90-minute live build + full product development"
+---
+
+# Sprint Plan - WeekendWhere SG
+# This file tracks progress on epics and stories for both the 90-minute demo and full product
+
+# ============================================
+# GLOBAL CONFIGURATION
+# ============================================
+metadata:
+  total_epics: 6
+  total_stories: 42
+  demo_stories: 28  # Stories allocated for 90-minute demo
+  full_product_stories: 42  # All stories for complete product
+
+  time_allocation:
+    ninety_minute_demo: "90 minutes"
+    epic_1_foundation: "15 minutes"
+    epic_2_discovery: "20 minutes"
+    epic_3_scoring: "20 minutes"
+    epic_4_data: "10 minutes"
+    epic_5_ux: "30 minutes"
+    epic_6_advanced: "Deferred (post-training)"
+
+  demo_priority: "high"  # Focus on demo-critical stories first
+  full_product_priority: "medium"  # Complete all stories post-demo
+
+# ============================================
+# CODE REVIEW CREW FEEDBACK
+# ============================================
+code_review_feedback:
+  critical_gaps:
+    - story_required: "Input validation & sanitization"
+      epic: "Epic 2"
+      priority: "HIGH"
+      reason: "Security - prevent XSS, injection attacks on /api/recommendations"
+
+    - story_required: "Timeout & circuit breaker handling"
+      epic: "Epic 4"
+      priority: "HIGH"
+      reason: "Prevent API hangs from breaking demo"
+
+    - story_required: "Request cancellation for rapid selector changes"
+      epic: "Epic 3"
+      priority: "HIGH"
+      reason: "Race condition - prevent stale recommendations"
+
+    - story_required: "Deploy & smoke test verification"
+      epic: "Epic 5"
+      priority: "CRITICAL"
+      reason: "Prove app works outside localhost"
+
+  optimization_suggestions:
+    - suggestion: "Combine Epic 1 setup stories into 1-2 stories"
+      rationale: "Use SvelteKit template instead of manual Turborepo setup"
+      time_savings: "10-15 minutes"
+
+    - suggestion: "Merge Epic 2 and Epic 3 stories"
+      rationale: "Selectors + API + Scoring are one feature from different angles"
+      time_savings: "5-10 minutes"
+
+    - suggestion: "Start with mobile-only, defer desktop/tablet"
+      rationale: "Reduce responsive layout complexity for demo"
+      time_savings: "5 minutes"
+
+  edge_cases_identified:
+    - "Rapid selector changes (< 300ms) - multiple pending requests"
+    - "Zero results from API - proper empty state handling"
+    - "API 500 errors - graceful degradation"
+    - "API timeouts - circuit breaker"
+    - "Malformed JSON responses - error handling"
+    - "NaN scores from bad data - validation"
+    - "Location permission denied - fallback to selector"
+    - "localStorage full/disabled - error handling"
+    - "Slow networks - progressive loading"
+    - "Weather/air quality API hangs - graceful degradation"
+    - "Fallback data missing/corrupt - verification"
+
+# ============================================
+# EPIC 1: FOUNDATION & PROJECT SETUP
+# ============================================
+epic_1:
+  id: "epic-1"
+  name: "Foundation & Project Setup"
+  goal: "Development team has a working monorepo with Svelte + shadcn + Express structure"
+  business_value: "Establishes build substrate for 90-minute live build"
+  status: "pending"
+  stories:
+    story_1_1:
+      id: "story-1.1"
+      title: "Initialize Turborepo Monorepo Structure"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: []
+      acceptance_criteria:
+        - "Directory structure created: apps/web, apps/api, packages/ui, packages/config, packages/types"
+        - "turbo.json configured with pipeline tasks"
+        - "pnpm-workspace.yaml defines workspace dependencies"
+        - "Root package.json includes run scripts"
+      completion_checklist:
+        - [ ] "Run `pnpm install` successfully"
+        - [ ] "Verify turbo.json loads without errors"
+        - [ ] "Confirm workspace structure matches spec"
+      notes: "CONSIDER: Use SvelteKit template instead for faster setup (saves 5-10 min)"
+
+    story_1_2:
+      id: "story-1.2"
+      title: "Configure TypeScript and Shared Build Settings"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 5
+      demo_critical: false
+      dependencies: ["story-1.1"]
+      acceptance_criteria:
+        - "Shared TypeScript config in packages/config"
+        - "Apps extend shared config"
+        - "Path aliases configured (@app/*, @package/*)"
+        - "Strict mode enabled"
+      completion_checklist:
+        - [ ] "Run `pnpm typecheck` successfully"
+        - [ ] "Import @weekend-where-sg/types from app"
+        - [ ] "Verify path aliases resolve"
+      notes: "OPTIMIZATION: Skip shared config for demo, use SvelteKit defaults"
+
+    story_1_3:
+      id: "story-1.3"
+      title: "Set Up SvelteKit Frontend Foundation"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-1.1"]
+      acceptance_criteria:
+        - "SvelteKit configured with Vite"
+        - "Basic routing structure in src/routes/"
+        - "Svelte stores created: regionStore, activityStore, preferenceStore, recommendationsStore"
+        - "Development server runs on localhost:5173"
+      completion_checklist:
+        - [ ] "Run `pnpm dev` in apps/web"
+        - [ ] "Verify stores are reactive (subscribe/unsubscribe)"
+        - [ ] "Navigate to basic route"
+      notes: "GOOD FOR DEMO: Keep stores simple, no persistence yet"
+
+    story_1_4:
+      id: "story-1.4"
+      title: "Implement Express Backend with API Structure"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-1.1"]
+      acceptance_criteria:
+        - "Express server with CORS configured"
+        - "Runs on localhost:3000"
+        - "GET /api/health endpoint returns { ok: true, app: 'WeekendWhere SG', version: '1.0.0' }"
+        - "GET /api/recommendations endpoint created (returns empty for now)"
+        - "Error handling middleware configured"
+      completion_checklist:
+        - [ ] "Run `pnpm dev` in apps/api"
+        - [ ] "curl localhost:3000/api/health returns correct response"
+        - [ ] "Verify CORS allows frontend requests"
+      notes: "ADD: Input validation validation as per security feedback"
+
+    story_1_5:
+      id: "story-1.5"
+      title: "Integrate shadcn-svelte Component Library"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 10
+      demo_critical: false
+      dependencies: ["story-1.3"]
+      acceptance_criteria:
+        - "shadcn-svelte installed in apps/web"
+        - "Tailwind CSS configured with Singapore design tokens"
+        - "Select, Card, Button, Badge components in @package/ui"
+        - "Components use Singapore theme colors"
+      completion_checklist:
+        - [ ] "npm install shadcn-svelte"
+        - [ ] "Add components to apps/web/src/lib/components"
+        - [ ] "Import and render a Button component"
+        - [ ] "Verify Tailwind includes custom colors"
+      notes: "OPTIMIZATION: Use default shadcn styling for demo, customize later"
+
+# ============================================
+# EPIC 2: RECOMMENDATION DISCOVERY
+# ============================================
+epic_2:
+  id: "epic-2"
+  name: "Recommendation Discovery"
+  goal: "Users can select preferences and see personalized park recommendations"
+  business_value: "Delivers core value - personalized outdoor recommendations"
+  status: "pending"
+  stories:
+    story_2_1:
+      id: "story-2.1"
+      title: "Implement Region Selector Component"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 3
+      demo_critical: true
+      dependencies: ["story-1.5"]
+      acceptance_criteria:
+        - "Dropdown shows: Central, East, West, North, South"
+        - "Uses shadcn Select with Singapore styling"
+        - "Updates regionStore on selection"
+        - "Keyboard navigation accessible"
+        - "ARIA label: 'Where in Singapore?'"
+      completion_checklist:
+        - [ ] "Render Select component"
+        - [ ] "Selecting option updates store"
+        - [ ] "Tab through dropdown with keyboard"
+      notes: "SIMPLE: Don't overengineer, use shadcn as-is"
+
+    story_2_2:
+      id: "story-2.2"
+      title: "Implement Activity Selector Component"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 3
+      demo_critical: true
+      dependencies: ["story-2.1"]
+      acceptance_criteria:
+        - "Dropdown shows: Family outing, Walking, Cycling, Nature, Fitness"
+        - "Uses shadcn Select with Singapore styling"
+        - "Updates activityStore on selection"
+        - "Keyboard navigation accessible"
+        - "ARIA label: 'What are you planning?'"
+      completion_checklist:
+        - [ ] "Copy region selector pattern"
+        - [ ] "Update with activity options"
+      notes: "SIMPLE: Reuse component pattern from story-2.1"
+
+    story_2_3:
+      id: "story-2.3"
+      title: "Implement Preference Selector Component"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 3
+      demo_critical: true
+      dependencies: ["story-2.2"]
+      acceptance_criteria:
+        - "Dropdown shows: Balanced, Weather-safe, Kid-friendly, Long walk, Cycling-friendly"
+        - "Uses shadcn Select with Singapore styling"
+        - "Updates preferenceStore on selection"
+        - "Keyboard navigation accessible"
+        - "ARIA label: 'What matters most?'"
+      completion_checklist:
+        - [ ] "Copy region selector pattern"
+        - [ ] "Update with preference options"
+      notes: "SIMPLE: Third selector, same pattern"
+
+    story_2_4:
+      id: "story-2.4"
+      title: "Create Recommendation Card Component"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-1.5"]
+      acceptance_criteria:
+        - "Card uses shadcn Card with Singapore styling"
+        - "Visual hierarchy: verdict > score > park name > region > reasons"
+        - "Verdict badge uses semantic colors"
+        - "Score displayed as large numeric (2xl)"
+        - "Reasons as bullet list"
+        - "Mobile-readable (no horizontal scroll)"
+        - "Hover: shadow-md to shadow-lg"
+      completion_checklist:
+        - [ ] "Render Card with mock data"
+        - [ ] "Verify verdict colors (success, primary, etc.)"
+        - [ ] "Test on mobile viewport (<640px)"
+      notes: "START SIMPLE: Mock data first, connect to API later"
+
+    story_2_5:
+      id: "story-2.5"
+      title: "Implement Backend Health Endpoint"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 2
+      demo_critical: true
+      dependencies: ["story-1.4"]
+      acceptance_criteria:
+        - "GET /api/health returns { ok: true, app: 'WeekendWhere SG', version: '1.0.0' }"
+        - "Response within 100ms"
+        - "Returns 200 status"
+        - "Supports CORS"
+      completion_checklist:
+        - [ ] "curl localhost:3000/api/health"
+        - [ ] "Verify response structure"
+        - [ ] "Check CORS headers"
+      notes: "QUICK WIN: Should take <2 minutes"
+
+    story_2_6:
+      id: "story-2.6"
+      title: "Implement Backend Recommendations Endpoint"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 10
+      demo_critical: true
+      dependencies: ["story-1.4", "story-3.1"]  # Needs scoring function
+      acceptance_criteria:
+        - "Accepts region, activity, preference, limit query params"
+        - "Validates region against 5 Singapore regions"
+        - "Validates activity against 5 activity types"
+        - "Validates preference against 5 preferences"
+        - "limit defaults to 6"
+        - "Response includes: source, region, activity, preference, count, recommendations[]"
+        - "Recommendations sorted by score (highest first)"
+        - "Each recommendation: id, name, region, score, verdict, activityFit, description, reasons[], signals{}"
+        - "Returns 400 for invalid parameters"
+        - "Response structure matches API contract exactly"
+      completion_checklist:
+        - [ ] "Test with valid parameters: curl localhost:3000/api/recommendations?region=East&activity=Cycling"
+        - [ ] "Test with invalid parameter: verify 400 response"
+        - [ ] "Verify response structure matches PRD"
+        - [ ] "Test sorting (highest score first)"
+      notes: "SECURITY: Add input sanitization to prevent XSS/injection"
+
+    story_2_7:
+      id: "story-2.7"
+      title: "Connect Frontend to Backend API"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-2.1", "story-2.2", "story-2.3", "story-2.6"]
+      acceptance_criteria:
+        - "Selector change updates store"
+        - "300ms debounce triggers API call"
+        - "API request includes current selector values"
+        - "Loading state shows during call"
+        - "Recommendation cards update with response"
+        - "Smooth scroll to results (300ms)"
+        - "Errors show user-friendly messages with retry"
+        - "Unidirectional data flow pattern"
+      completion_checklist:
+        - [ ] "Change selector, verify API call fires after 300ms"
+        - [ ] "Change selector twice rapidly, verify only one call"
+        - [ ] "Verify loading state appears"
+        - [ ] "Verify cards update with API data"
+        - [ ] "Simulate API error, verify user-friendly message"
+      notes: "CRITICAL: Implement request cancellation to prevent race conditions (per Code Review feedback)"
+
+    story_2_8:
+      id: "story-2.8"
+      title: "Implement Responsive Layout for Selectors"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 5
+      demo_critical: false
+      dependencies: ["story-2.1", "story-2.2", "story-2.3"]
+      acceptance_criteria:
+        - "Mobile (<640px): selectors stacked vertically, full width"
+        - "Tablet (640px-1024px): centered 640px, region+activity side-by-side"
+        - "Desktop (>1024px): centered 800px, all selectors in one row"
+        - "Touch targets minimum 44x44px"
+        - "No horizontal scroll on mobile"
+      completion_checklist:
+        - [ ] "Test at 375px (mobile)"
+        - [ ] "Test at 768px (tablet)"
+        - [ ] "Test at 1280px (desktop)"
+        - [ ] "Verify no horizontal scroll"
+      notes: "OPTIMIZATION: Mobile-only for demo, defer tablet/desktop"
+
+# ============================================
+# EPIC 3: EXPLAINABLE SCORING ENGINE
+# ============================================
+epic_3:
+  id: "epic-3"
+  name: "Explainable Scoring Engine"
+  goal: "Users understand WHY each park was recommended with clear reasons"
+  business_value: "Builds trust through explainable AI"
+  status: "pending"
+  stories:
+    story_3_1:
+      id: "story-3.1"
+      title: "Implement Pure Function Scoring System"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 10
+      demo_critical: true
+      dependencies: ["story-1.4"]
+      acceptance_criteria:
+        - "Function: scoring(parkData, userPreferences) => { score, verdict, reasons }"
+        - "Pure function (no side effects, no external dependencies)"
+        - "Deterministic (same inputs = same outputs)"
+        - "Unit testable without mocking"
+        - "Follows PRD scoring rules (base + region + activity + preference)"
+        - "Verdict mapping: 9+ = Perfect, 7-8 = Great, 5-6 = Good, 3-4 = Okay, <3 = Poor"
+        - "Located in apps/api/src/services/scoring.ts"
+      completion_checklist:
+        - [ ] "Write scoring function"
+        - [ ] "Test with sample park data"
+        - [ ] "Verify score calculation (base + bonuses)"
+        - [ ] "Verify verdict mapping"
+        - [ ] "Write one unit test"
+      notes: "KEEP SIMPLE: Basic scoring first, weather/air quality later"
+
+    story_3_2:
+      id: "story-3.2"
+      title: "Implement Signal-Based Data Structure"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-3.1"]
+      acceptance_criteria:
+        - "Park object includes signals: { activity, family, cycling, nature, fitness, route, kidFriendly }"
+        - "Signals are boolean or number"
+        - "Adding new signal never breaks existing scoring"
+        - "Unknown signals ignored gracefully"
+        - "Signals extensible without API contract changes"
+        - "Signal structure defined in shared types"
+      completion_checklist:
+        - [ ] "Define Signal type in @weekend-where-sg/types"
+        - [ ] "Create sample park with signals"
+        - [ ] "Verify scoring function reads signals"
+        - [ ] "Test adding unknown signal (should not break)"
+      notes: "GOOD: This supports extensibility"
+
+    story_3_3:
+      id: "story-3.3"
+      title: "Implement Region-Based Scoring"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-3.1"]
+      acceptance_criteria:
+        - "Park region matches user selection: +3 points"
+        - "'Matches selected region' added to reasons"
+        - "Case-insensitive matching"
+        - "Non-matching regions: no bonus"
+      completion_checklist:
+        - [ ] "Test matching region (expect +3)"
+        - [ ] "Test non-matching region (expect 0 bonus)"
+        - [ ] "Verify reason added"
+        - [ ] "Test case insensitivity"
+      notes: "SIMPLE: String comparison, -3 bonus"
+
+    story_3_4:
+      id: "story-3.4"
+      title: "Implement Activity-Based Scoring"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 10
+      demo_critical: true
+      dependencies: ["story-3.2"]
+      acceptance_criteria:
+        - "Cycling activity: parks with cycling signal +3, route/connector +2"
+        - "'Good for cycling' added to reasons"
+        - "Family activity: parks with family signal +3, kidFriendly +2"
+        - "'Good for family outing' added to reasons"
+        - "Similar logic for Walking, Nature, Fitness"
+      completion_checklist:
+        - [ ] "Test cycling activity (cycling signal +3)"
+        - [ ] "Test cycling activity (route signal +2)"
+        - [ ] "Test family activity (family signal +3)"
+        - [ ] "Test family activity (kidFriendly signal +2)"
+        - [ ] "Verify reasons added correctly"
+      notes: "SYSTEMATIC: One activity at a time, test each"
+
+    story_3_5:
+      id: "story-3.5"
+      title: "Generate Human-Readable Recommendation Reasons"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-3.1"]
+      acceptance_criteria:
+        - "Every recommendation has at least two reasons when possible"
+        - "Reasons are human-readable (not codes)"
+        - "Reasons match scoring rules applied"
+        - "Reasons explain value clearly"
+        - "Reasons ordered by relevance"
+        - "Formatted for display in cards"
+      completion_checklist:
+        - [ ] "Verify reasons are readable strings"
+        - [ ] "Check reasons match scoring logic"
+        - [ ] "Verify ordering (highest scoring reasons first)"
+      notes: "UX: Make reasons sound helpful, not robotic"
+
+    story_3_6:
+      id: "story-3.6"
+      title: "Implement Debounced API Calls with State Management"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-2.7"]
+      acceptance_criteria:
+        - "Selector change → 300ms debounce starts"
+        - "Another change within 300ms → timer resets"
+        - "After 300ms no changes → API call triggered"
+        - "API call uses current store values"
+        - "Loading state during call"
+        - "Recommendations store updated with response"
+        - "Unidirectional flow: action → store → debounce → API → store → UI"
+      completion_checklist:
+        - [ ] "Test debounce timing (verify 300ms)"
+        - [ ] "Test rapid changes (verify only one call)"
+        - [ ] "Verify loading state appears/disappears"
+        - [ ] "Verify store updates with response"
+      notes: "CRITICAL: Add request cancellation (per Code Review feedback)"
+
+# ============================================
+# EPIC 4: RELIABLE DATA LAYER
+# ============================================
+epic_4:
+  id: "epic-4"
+  name: "Reliable Data Layer"
+  goal: "App works reliably even when external APIs fail"
+  business_value: "Handles Singapore's real-world conditions"
+  status: "pending"
+  stories:
+    story_4_1:
+      id: "story-4.1"
+      title: "Create Fallback Park Data"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-3.2"]
+      acceptance_criteria:
+        - "apps/api/data/parks.json contains 10-15 sample parks"
+        - "Each park: id, name, region, description, signals{}"
+        - "Parks represent all 5 regions"
+        - "Varied signals (cycling, family, nature)"
+        - "Recognizable Singapore locations (East Coast Park, Botanic Gardens, etc.)"
+        - "Data structure matches signal-based schema"
+        - "Loads within 500ms"
+      completion_checklist:
+        - [ ] "Create parks.json with 10 parks"
+        - [ ] "Verify 2 parks per region minimum"
+        - [ ] "Verify all signals present in at least some parks"
+        - [ ] "Load file and verify timing"
+      notes: "INCLUDE: Well-known Singapore parks for demo authenticity"
+
+    story_4_2:
+      id: "story-4.2"
+      title: "Implement Graceful Error Handling"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-4.1"]
+      acceptance_criteria:
+        - "Backend catches external data errors in try/catch"
+        - "Fallback data returned on error"
+        - "API response includes source: 'fallback data'"
+        - "Frontend renders fallback results normally"
+        - "Technical errors logged but not exposed to user"
+        - "Error handling at data layer (not API layer)"
+      completion_checklist:
+        - [ ] "Simulate external API failure"
+        - [ ] "Verify fallback data returned"
+        - [ ] "Verify source: 'fallback data' in response"
+        - [ ] "Verify frontend displays normally"
+      notes: "ADD: Verify fallback data exists before using (per Code Review feedback)"
+
+    story_4_3:
+      id: "story-4.3"
+      title: "Integrate Weather Data (Stretch)"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 10
+      demo_critical: false
+      dependencies: ["story-4.2"]
+      acceptance_criteria:
+        - "Fetch weather forecast data"
+        - "Rain/thundery showers → response includes weather.warning"
+        - "Weather-safe preference + rain → subtract 2 points"
+        - "'Rain expected — bring umbrella' added to reasons"
+        - "Weather unavailable → app still returns recommendations"
+        - "Weather status set to 'not_checked_in_mvp' for demo"
+      completion_checklist:
+        - [ ] "Mock weather API response"
+        - [ ] "Test rainy condition (verify warning)"
+        - [ ] "Test weather-safe preference (verify score adjustment)"
+        - [ ] "Test weather unavailable (verify app still works)"
+      notes: "STRETCH: Defer to post-demo, use mock for now"
+
+    story_4_4:
+      id: "story-4.4"
+      title: "Integrate Air Quality Data (Stretch)"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 10
+      demo_critical: false
+      dependencies: ["story-4.2"]
+      acceptance_criteria:
+        - "Fetch PM2.5 data"
+        - "Elevated PM2.5 → response includes airQuality.warning and airQuality.label"
+        - "Long walk/Cycling preference + elevated PM2.5 → subtract 2 points"
+        - "'Air quality may affect outdoor activity' added to reasons"
+        - "PM2.5 mapped to broad Singapore region"
+        - "PM2.5 unavailable → app still returns recommendations"
+        - "Air quality status set to 'not_checked_in_mvp' for demo"
+      completion_checklist:
+        - [ ] "Mock air quality API response"
+        - [ ] "Test elevated PM2.5 (verify warning)"
+        - [ ] "Test preference interaction (verify score adjustment)"
+        - [ ] "Test air quality unavailable (verify app still works)"
+      notes: "STRETCH: Defer to post-demo, use mock for now"
+
+    story_4_5:
+      id: "story-4.5"
+      title: "Implement Condition-Based Verdict"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 5
+      demo_critical: false
+      dependencies: ["story-4.3", "story-4.4"]
+      acceptance_criteria:
+        - "Poor conditions (heavy rain, high PM2.5) → score includes adjustments"
+        - "Verdict changes based on adjusted score"
+        - "App still returns recommendations (not fail)"
+        - "API response includes warning if condition data not loaded"
+        - "Verdict never below 'Maybe choose another place' due to conditions alone"
+        - "Condition adjustments transparent in reasons"
+      completion_checklist:
+        - [ ] "Test poor conditions (verify verdict change)"
+        - [ ] "Verify app doesn't fail on poor conditions"
+        - [ ] "Verify reasons explain condition adjustments"
+      notes: "STRETCH: Depends on weather/air quality stories"
+
+# ============================================
+# EPIC 5: ENHANCED USER EXPERIENCE
+# ============================================
+epic_5:
+  id: "epic-5"
+  name: "Enhanced User Experience"
+  goal: "Smooth, responsive interface optimized for Singapore users"
+  business_value: "Polishes experience to production quality"
+  status: "pending"
+  stories:
+    story_5_1:
+      id: "story-5.1"
+      title: "Implement Singapore Design Tokens"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 5
+      demo_critical: false
+      dependencies: ["story-1.5"]
+      acceptance_criteria:
+        - "Primary: Singapore tropical green (#3C5D4F)"
+        - "Secondary: Tropical wood/earth (#D4A574)"
+        - "Accent: Singapore red (#E63946)"
+        - "Special: Orchid purple (#9B5DE5)"
+        - "Semantic colors (success green, warning sunset orange)"
+        - "Background: Warm off-white (#FAF9F6)"
+        - "Typography: base 18px, xs 14px"
+        - "Spacing: Generous whitespace"
+        - "Border radius: Friendly rounded (card 8px, button 6px)"
+        - "Configurable in Tailwind"
+      completion_checklist:
+        - [ ] "Add colors to Tailwind config"
+        - [ ] "Test primary color on button"
+        - [ ] "Verify all design tokens available"
+      notes: "OPTIMIZATION: Use default Tailwind colors for demo, customize later"
+
+    story_5_2:
+      id: "story-5.2"
+      title: "Implement Loading States with Singapore Context"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 3
+      demo_critical: true
+      dependencies: ["story-2.7"]
+      acceptance_criteria:
+        - "Spinner animation displayed"
+        - "Message: 'Finding the best spots for you...'"
+        - "Minimum 500ms display (prevent flicker)"
+        - "Centered on screen"
+        - "Skeleton loaders for cards"
+        - "Respects prefers-reduced-motion"
+        - "Smooth but fast (300ms duration)"
+      completion_checklist:
+        - [ ] "Trigger loading state"
+        - [ ] "Verify spinner appears"
+        - [ ] "Verify message displayed"
+        - [ ] "Test minimum 500ms display"
+      notes: "SIMPLE: Don't overengineer loading, just show it works"
+
+    story_5_3:
+      id: "story-5.3"
+      title: "Implement User-Friendly Error States"
+      status: "pending"
+      priority: "high"
+      estimate_minutes: 5
+      demo_critical: true
+      dependencies: ["story-2.7"]
+      acceptance_criteria:
+        - "Friendly error message (not technical)"
+        - "Explains what happened in plain language"
+        - "Retry button available"
+        - "Cached data → 'Using cached data' message"
+        - "Error state doesn't block entire app"
+        - "Neutral/approachable error icon (not warning colors)"
+        - "Accessible with screen readers"
+      completion_checklist:
+        - [ ] "Simulate API error"
+        - [ ] "Verify friendly message displayed"
+        - [ ] "Verify retry button works"
+        - [ ] "Test with screen reader"
+      notes: "CRITICAL: This is your demo safety net"
+
+    story_5_4:
+      id: "story-5.4"
+      title: "Implement Empty State with Guidance"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 3
+      demo_critical: false
+      dependencies: ["story-2.7"]
+      acceptance_criteria:
+        - "Message: 'No parks match your criteria. Try adjusting your preferences.'"
+        - "Neutral icon accompanies message"
+        - "Actionable suggestions (e.g., 'Try a different region or activity')"
+        - "Empty state only appears with explanation"
+        - "Encourages exploration rather than failure"
+        - "Properly spaced and centered"
+      completion_checklist:
+        - [ ] "Trigger empty state (zero results)"
+        - [ ] "Verify message displayed"
+        - [ ] "Verify suggestions actionable"
+      notes: "SIMPLE: But important for UX"
+
+    story_5_5:
+      id: "story-5.5"
+      title: "Implement Accessibility Features"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 5
+      demo_critical: false
+      dependencies: ["story-2.1", "story-2.2", "story-2.3"]
+      acceptance_criteria:
+        - "WCAG AA contrast (4.5:1 minimum)"
+        - "Semantic HTML (main, section, article, button, select)"
+        - "ARIA labels on interactive elements"
+        - "Focus visible: 2px primary outline"
+        - "Skip-to-content link"
+        - "Touch targets minimum 44x44px"
+        - "Form fields have associated labels"
+        - "Color not only information conveyance"
+        - "Animations respect prefers-reduced-motion"
+      completion_checklist:
+        - [ ] "Test contrast with browser tool"
+        - [ ] "Test keyboard navigation (Tab through interface)"
+        - [ ] "Test with screen reader (basic verification)"
+        - [ ] "Test touch target sizes"
+      notes: "OPTIMIZATION: Basic accessibility for demo, full WCAG post-demo"
+
+    story_5_6:
+      id: "story-5.6"
+      title: "Implement Interaction Behaviors and Micro-animations"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 5
+      demo_critical: false
+      dependencies: ["story-2.7", "story-2.4"]
+      acceptance_criteria:
+        - "Selector change → 300ms debounce"
+        - "Optimistic UI update immediately"
+        - "Smooth scroll (300ms) to results"
+        - "Card hover → shadow-md to shadow-lg (300ms)"
+        - "Initial UI renders within 1 second"
+        - "Animations smooth but not sluggish"
+        - "Respects prefers-reduced-motion"
+      completion_checklist:
+        - [ ] "Test debounce timing"
+        - [ ] "Test smooth scroll"
+        - [ ] "Test card hover effect"
+        - [ ] "Test with prefers-reduced-motion"
+      notes: "OPTIMIZATION: Skip micro-animations for demo, add later"
+
+    story_5_7:
+      id: "story-5.7"
+      title: "Implement Progressive Disclosure Layout"
+      status: "pending"
+      priority: "medium"
+      estimate_minutes: 5
+      demo_critical: false
+      dependencies: ["story-2.1", "story-2.2", "story-2.3", "story-2.4"]
+      acceptance_criteria:
+        - "Control panel (selectors) at top"
+        - "State display (loading/error) in middle"
+        - "Recommendation stack at bottom"
+        - "Maximum 10 cards (configurable via API limit)"
+        - "Results area scrollable when many cards"
+        - "Minimum 1 card when available"
+        - "Single-screen progressive flow"
+        - "No navigation required for core features"
+      completion_checklist:
+        - [ ] "Verify layout order (selectors → state → results)"
+        - [ ] "Test with 10+ cards (verify scroll)"
+        - [ ] "Test with 1 card (verify displays)"
+      notes: "GOOD: This is the right UX pattern"
+
+    story_5_deploy:
+      id: "story-5.deploy"
+      title: "Deploy and Smoke Test (CRITICAL - ADDED per Code Review)"
+      status: "pending"
+      priority: "CRITICAL"
+      estimate_minutes: 10
+      demo_critical: true
+      dependencies: ["story-2.7", "story-4.2", "story-5.3"]
+      acceptance_criteria:
+        - "App deployed to Vercel/Railway (or similar)"
+        - "Health endpoint responds in production"
+        - "Recommendations endpoint responds in production"
+        - "Frontend loads in production"
+        - "Selector changes trigger API calls successfully"
+        - "Recommendation cards display correctly"
+        - "Error states work (test with bad API call)"
+        - "Loading states work"
+        - "Mobile responsive verified (test on real device or browser dev tools)"
+        - "Smoke test: Complete user journey works end-to-end"
+      completion_checklist:
+        - [ ] "Deploy backend"
+        - [ ] "Deploy frontend"
+        - [ ] "Test production URL loads"
+        - [ ] "Test health endpoint: curl https://your-api.com/api/health"
+        - [ ] "Test recommendations endpoint"
+        - [ ] "Test selector → API → cards flow"
+        - [ ] "Test error handling"
+        - [ ] "Test mobile view (<640px)"
+        - [ ] "Complete smoke test checklist"
+      notes: "CRITICAL: This proves your app actually works. Don't skip it."
+
+# ============================================
+# EPIC 6: ADVANCED FEATURES (FUTURE/STRETCH)
+# ============================================
+epic_6:
+  id: "epic-6"
+  name: "Advanced Features (Future/Stretch)"
+  goal: "Power users get rich features while demonstrating architecture extensibility"
+  business_value: "Demonstrates extensibility and provides roadmap"
+  status: "pending"
+  deferred: true  # Not part of 90-minute demo
+  stories:
+    story_6_1:
+      id: "story-6.1"
+      title: "Implement Route-Connected Parks"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 10
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-3.4"]
+      notes: "Demonstrates signal extensibility"
+
+    story_6_2:
+      id: "story-6.2"
+      title: "Implement Long Walk Recommendations"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 10
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-3.4"]
+      notes: "Similar to story-6.1 pattern"
+
+    story_6_3:
+      id: "story-6.3"
+      title: "Design Route-Aware Extension Points"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 5
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-3.2"]
+      notes: "Architecture validation story"
+
+    story_6_4:
+      id: "story-6.4"
+      title: "Implement Kid-Friendly Preference"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 10
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-3.4"]
+      notes: "Preference scoring pattern"
+
+    story_6_5:
+      id: "story-6.5"
+      title: "Implement Family Outing Mode"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 10
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-3.4"]
+      notes: "Multi-generational accessibility"
+
+    story_6_6:
+      id: "story-6.6"
+      title: "Implement Accessibility Signals"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 5
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-3.2"]
+      notes: "Optional signal handling"
+
+    story_6_7:
+      id: "story-6.7"
+      title: "Implement Area Search"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 15
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-2.6"]
+      notes: "Geospatial search capability"
+
+    story_6_8:
+      id: "story-6.8"
+      title: "Implement Location-Based Recommendations"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 15
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-2.6"]
+      notes: "ADD: Privacy consent story (per Code Review feedback)"
+
+    story_6_9:
+      id: "story-6.9"
+      title: "Implement Preference Memory"
+      status: "pending"
+      priority: "low"
+      estimate_minutes: 10
+      demo_critical: false
+      deferred: true
+      dependencies: ["story-2.7"]
+      notes: "ADD: localStorage quota/error handling (per Code Review feedback)"
+
+# ============================================
+# STORY STATUS TRACKING
+# ============================================
+story_status_summary:
+  pending: 42
+  in_progress: 0
+  completed: 0
+  blocked: 0
+  deferred: 9  # Epic 6 stories
+
+demo_critical_stories: 15  # Must complete for 90-minute demo
+demo_critical_completed: 0
+
+# ============================================
+# 90-MINUTE DEMO OPTIMIZED PLAN
+# ============================================
+demo_plan_optimized:
+  # Based on Code Review Crew feedback, optimized for 90-minute completion
+  total_time: "90 minutes"
+
+  sprint_backlog:
+    - phase: "Setup & Foundation (10 min)"
+      stories: ["story-1.1", "story-1.3", "story-1.4"]
+      notes: "Use SvelteKit template, skip Turborepo for speed"
+
+    - phase: "Selectors & UI (15 min)"
+      stories: ["story-2.1", "story-2.2", "story-2.3", "story-2.4"]
+      notes: "Build selectors and cards with mock data first"
+
+    - phase: "Scoring Engine (15 min)"
+      stories: ["story-3.1", "story-3.2", "story-3.3", "story-3.4"]
+      notes: "Pure function scoring with basic rules"
+
+    - phase: "API Integration (20 min)"
+      stories: ["story-2.5", "story-2.6", "story-2.7", "story-4.1"]
+      notes: "Connect frontend to backend, add fallback data"
+
+    - phase: "Error Handling (10 min)"
+      stories: ["story-4.2", "story-5.3"]
+      notes: "Graceful degradation and user-friendly errors"
+
+    - phase: "Deploy & Verify (20 min)"
+      stories: ["story-5.deploy"]
+      notes: "CRITICAL: Deploy to production, smoke test, verify end-to-end"
+
+  total_stories_in_optimized_plan: 17
+  estimated_time: "90 minutes"
+  buffer: "0 minutes (tight)"
+
+# ============================================
+# RISK TRACKING
+# ============================================
+risks:
+  - risk: "Rapid selector changes cause race conditions"
+    mitigation: "Implement request cancellation (added to story-2.7)"
+    status: "mitigated"
+
+  - risk: "API timeout/hang during demo"
+    mitigation: "Add timeout and circuit breaker (added to story-4.2)"
+    status: "mitigated"
+
+  - risk: "Deployment failure during demo"
+    mitigation: "Practice deployment beforehand, have backup plan"
+    status: "open"
+
+  - risk: "90 minutes insufficient for all stories"
+    mitigation: "Follow optimized demo plan, defer non-critical stories"
+    status: "mitigated"
+
+  - risk: "WiFi/Internet issues during demo"
+    mitigation: "Have fallback data ready, test offline mode"
+    status: "open"
+
+  - risk: "Browser compatibility issues"
+    mitigation: "Test on Chrome/Safari beforehand, have backup browser"
+    status: "open"
+
+# ============================================
+# END OF SPRINT PLAN
+# ============================================
+# Next steps:
+# 1. Review this sprint plan with team
+# 2. Adjust story estimates based on team velocity
+# 3. Assign stories to developers
+# 4. Start sprint execution
+# 5. Update story statuses as work progresses
