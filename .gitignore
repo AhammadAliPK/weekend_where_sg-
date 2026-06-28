@@ -4,8 +4,7 @@ node_modules/
 
 # Build outputs
 .turbo/
-apps/web/.svelte-kit/
-apps/web/.svelte-kit/
+**/.svelte-kit/
 apps/web/build/
 apps/api/dist/
 
