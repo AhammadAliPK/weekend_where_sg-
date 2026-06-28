@@ -1,1 +1,5 @@
 .claude/settings.local.json
+apps/web/node_modules
+node_modules/
+.turbo/cookies/
+apps/web/.svelte-kit/
