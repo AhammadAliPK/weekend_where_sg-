@@ -21,23 +21,17 @@
 	$: loading = $recommendationsStore.loading;
 	$: error = $recommendationsStore.error;
 
-	// Trigger API calls when all three selectors have values
-	$: {
-		if (currentRegion && currentActivity && currentPreference) {
-			// Debounce the API call to avoid excessive requests
-			const timeout = setTimeout(() => {
-				recommendationsStore.triggerFetch();
-			}, 300);
-
-			return () => clearTimeout(timeout);
-		}
-	}
-
 	// Trigger API fetch when any selector changes
 	function handleSelectorChange() {
 		if (currentRegion && currentActivity && currentPreference) {
+			// Debounce is handled by the recommendationsStore
 			recommendationsStore.triggerFetch();
 		}
+	}
+
+	// Reactive trigger when selectors change
+	$: if (currentRegion && currentActivity && currentPreference) {
+		handleSelectorChange();
 	}
 
 	// Scroll to recommendations when they update
@@ -54,47 +48,47 @@
 	});
 </script>
 
-<div class="container">
-	<header class="header">
-		<h1>WeekendWhere SG</h1>
-		<p>Discover Singapore's best parks and outdoor activities</p>
+<div class="max-w-4xl mx-auto p-4">
+	<header class="text-center py-8">
+		<h1 class="text-3xl font-bold text-primary mb-2">WeekendWhere SG</h1>
+		<p class="text-neutral">Discover Singapore's best parks and outdoor activities</p>
 	</header>
 
-	<main class="main-content">
-		<section class="welcome-section">
-			<h2>Welcome to WeekendWhere SG</h2>
-			<p>Select your preferences to get personalized park recommendations</p>
+	<main class="py-8">
+		<section class="text-center p-8 bg-neutral-50 rounded-card mb-8">
+			<h2 class="text-2xl font-semibold text-primary mb-2">Welcome to WeekendWhere SG</h2>
+			<p class="text-base text-neutral">Select your preferences to get personalized park recommendations</p>
 		</section>
 
 		<!-- Preference Selectors -->
-		<section class="selectors-section">
+		<section class="mb-8">
 			<Card>
 				<CardHeader>
 					<CardTitle>Choose Your Preferences</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<div class="selectors-grid">
-						<div class="selector-item">
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+						<div class="min-w-0">
 							<RegionSelector />
 						</div>
-						<div class="selector-item">
+						<div class="min-w-0">
 							<ActivitySelector />
 						</div>
-						<div class="selector-item">
+						<div class="min-w-0">
 							<PreferenceSelector />
 						</div>
 					</div>
 
 					{#if currentRegion || currentActivity || currentPreference}
-						<div class="current-selection">
+						<div class="p-4 bg-blue-50 rounded-card border-2 border-primary">
 							{#if currentRegion}
-								<p><strong>Selected Region:</strong> {currentRegion}</p>
+								<p class="mb-1 text-base"><strong class="text-primary">Selected Region:</strong> {currentRegion}</p>
 							{/if}
 							{#if currentActivity}
-								<p><strong>Selected Activity:</strong> {currentActivity}</p>
+								<p class="mb-1 text-base"><strong class="text-primary">Selected Activity:</strong> {currentActivity}</p>
 							{/if}
 							{#if currentPreference}
-								<p><strong>Selected Preference:</strong> {currentPreference}</p>
+								<p class="mb-1 text-base"><strong class="text-primary">Selected Preference:</strong> {currentPreference}</p>
 							{/if}
 						</div>
 					{/if}
@@ -103,22 +97,22 @@
 		</section>
 
 		{#if loading}
-			<div class="loading">
+			<div class="text-center p-8 text-neutral">
 				<p>Finding the best spots for you...</p>
 			</div>
 		{/if}
 
 		{#if error}
-			<div class="error">
-				<p>⚠️ {error}</p>
-				<button on:click={handleSelectorChange} class="retry-button">Retry</button>
+			<div class="p-8 bg-yellow-100 border-2 border-yellow-500 rounded-card mb-8 text-center">
+				<p class="text-yellow-800 mb-4">⚠️ {error}</p>
+				<Button on:click={handleSelectorChange}>Retry</Button>
 			</div>
 		{/if}
 
 		{#if recommendations.length > 0}
-			<section class="recommendations" id="recommendations-section">
-				<h3 class="recommendations-title">Recommended Parks</h3>
-				<div class="recommendations-grid">
+			<section class="mt-8" id="recommendations-section">
+				<h3 class="text-xl font-semibold text-primary mb-4">Recommended Parks</h3>
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 					{#each recommendations as recommendation}
 						<RecommendationCard recommendation={recommendation} />
 					{/each}
@@ -127,146 +121,7 @@
 		{/if}
 	</main>
 
-	<footer class="footer">
+	<footer class="text-center py-8 text-neutral text-sm">
 		<p>&copy; 2026 WeekendWhere SG. Built for Singapore's outdoor enthusiasts.</p>
 	</footer>
 </div>
-
-<style>
-	.container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 1rem;
-	}
-
-	.header {
-		text-align: center;
-		padding: 2rem 0;
-	}
-
-	.header h1 {
-		color: #3C5D4F;
-		margin: 0 0 0.5rem 0;
-	}
-
-	.header p {
-		color: #666;
-		margin: 0;
-	}
-
-	.main-content {
-		padding: 2rem 0;
-	}
-
-	.welcome-section {
-		text-align: center;
-		padding: 2rem;
-		background: #f5f5f5;
-		border-radius: 8px;
-		margin-bottom: 2rem;
-	}
-
-	.loading {
-		text-align: center;
-		padding: 2rem;
-		color: #666;
-	}
-
-	.error {
-		padding: 2rem;
-		background: #fff3cd;
-		border: 1px solid #ffc107;
-		border-radius: 8px;
-		margin-bottom: 2rem;
-		text-align: center;
-	}
-
-	.error p {
-		color: #856404;
-		margin-bottom: 1rem;
-	}
-
-	.retry-button {
-		padding: 8px 16px;
-		background: #3C5D4F;
-		color: white;
-		border: none;
-		border-radius: 4px;
-		cursor: pointer;
-		font-size: 14px;
-	}
-
-	.retry-button:hover {
-		background: #2a4539;
-	}
-
-	.footer {
-		text-align: center;
-		padding: 2rem 0;
-		color: #999;
-		font-size: 0.875rem;
-	}
-
-	.component-demo {
-		margin-bottom: 2rem;
-	}
-
-	.selectors-section {
-		margin-bottom: 2rem;
-	}
-
-	.selectors-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-		gap: 1rem;
-		margin-bottom: 1.5rem;
-	}
-
-	.selector-item {
-		min-width: 0;
-	}
-
-	.current-selection {
-		padding: 1rem;
-		background: #f0f8ff;
-		border-radius: 8px;
-		border: 1px solid #3C5D4F;
-	}
-
-	.current-selection p {
-		margin: 0;
-		color: #212121;
-		font-size: 16px;
-	}
-
-	.demo-row {
-		display: flex;
-		gap: 0.5rem;
-		margin-bottom: 1rem;
-		align-items: center;
-	}
-
-	.recommendations {
-		margin-top: 2rem;
-	}
-
-	.recommendations-title {
-		font-size: 20px;
-		font-weight: 600;
-		color: #3C5D4F;
-		margin-bottom: 1rem;
-	}
-
-	.recommendations-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: 1rem;
-	}
-
-	/* Mobile responsive */
-	@media (max-width: 640px) {
-		.recommendations-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>
