@@ -1,5 +1,27 @@
-.claude/settings.local.json
-apps/web/node_modules
+# Dependencies
 node_modules/
-.turbo/cookies/
+**/node_modules/
+
+# Build outputs
+.turbo/
 apps/web/.svelte-kit/
+apps/web/.svelte-kit/
+apps/web/build/
+apps/api/dist/
+
+# IDE
+.claude/settings.local.json
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
