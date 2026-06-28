@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let variant: 'success' | 'primary' | 'secondary' | 'warning' | 'error' | 'neutral' = 'primary';
 	export let size: 'sm' | 'md' = 'md';
-	export let class: string = '';
+	export let customClass: string = '';
 
 	const variantClasses: Record<string, string> = {
 		success: 'bg-success text-white',
@@ -20,7 +20,7 @@
 	$: classes = `
 		${variantClasses[variant]} ${sizeClasses[size]}
 		font-medium rounded-badge inline-flex items-center
-		${class}
+		${customClass}
 	`;
 </script>
 

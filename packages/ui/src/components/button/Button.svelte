@@ -5,7 +5,7 @@
 	export let size: 'sm' | 'md' | 'lg' = 'md';
 	export let disabled = false;
 	export let type: 'button' | 'submit' | 'reset' = 'button';
-	export let class: string = '';
+	export let customClass: string = '';
 
 	const dispatch = createEventDispatcher();
 
@@ -33,7 +33,7 @@
 		font-medium rounded-button transition-colors duration-200
 		focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2
 		${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-		${class}
+		${customClass}
 	`;
 </script>
 

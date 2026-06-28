@@ -9,29 +9,48 @@
 	import { Card, CardHeader, CardContent, CardTitle } from '@weekend-where-sg/ui/card';
 	import { Button } from '@weekend-where-sg/ui/button';
 	import { Badge } from '@weekend-where-sg/ui/badge';
+	import RegionSelector from '$lib/components/RegionSelector.svelte';
+	import ActivitySelector from '$lib/components/ActivitySelector.svelte';
+	import PreferenceSelector from '$lib/components/PreferenceSelector.svelte';
+	import RecommendationCard from '$lib/components/RecommendationCard.svelte';
 
-	let currentRegion = $regionStore.selected;
-	let currentActivity = $activityStore.selected;
-	let currentPreference = $preferenceStore.selected;
-	let recommendations = $recommendationsStore.items;
-	let loading = $recommendationsStore.loading;
+	$: currentRegion = $regionStore.selected;
+	$: currentActivity = $activityStore.selected;
+	$: currentPreference = $preferenceStore.selected;
+	$: recommendations = $recommendationsStore.items;
+	$: loading = $recommendationsStore.loading;
+	$: error = $recommendationsStore.error;
 
-	// Subscribe to store changes
-	regionStore.subscribe(value => {
-		currentRegion = value.selected;
-	});
+	// Trigger API calls when all three selectors have values
+	$: {
+		if (currentRegion && currentActivity && currentPreference) {
+			// Debounce the API call to avoid excessive requests
+			const timeout = setTimeout(() => {
+				recommendationsStore.triggerFetch();
+			}, 300);
 
-	activityStore.subscribe(value => {
-		currentActivity = value.selected;
-	});
+			return () => clearTimeout(timeout);
+		}
+	}
 
-	preferenceStore.subscribe(value => {
-		currentPreference = value.selected;
-	});
+	// Trigger API fetch when any selector changes
+	function handleSelectorChange() {
+		if (currentRegion && currentActivity && currentPreference) {
+			recommendationsStore.triggerFetch();
+		}
+	}
 
-	recommendationsStore.subscribe(value => {
-		recommendations = value.items;
-		loading = value.loading;
+	// Scroll to recommendations when they update
+	recommendationsStore.subscribe((state) => {
+		if (state.items.length > 0 && !state.loading) {
+			// Scroll to recommendations section smoothly
+			setTimeout(() => {
+				const element = document.getElementById('recommendations-section');
+				if (element) {
+					element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}
+			}, 100);
+		}
 	});
 </script>
 
@@ -47,24 +66,38 @@
 			<p>Select your preferences to get personalized park recommendations</p>
 		</section>
 
-		<!-- UI Components Demo -->
-		<section class="component-demo">
+		<!-- Preference Selectors -->
+		<section class="selectors-section">
 			<Card>
 				<CardHeader>
-					<CardTitle>UI Components Test</CardTitle>
+					<CardTitle>Choose Your Preferences</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<div class="demo-row">
-						<Button variant="primary">Primary Button</Button>
-						<Button variant="secondary">Secondary Button</Button>
-						<Button variant="accent">Accent Button</Button>
+					<div class="selectors-grid">
+						<div class="selector-item">
+							<RegionSelector />
+						</div>
+						<div class="selector-item">
+							<ActivitySelector />
+						</div>
+						<div class="selector-item">
+							<PreferenceSelector />
+						</div>
 					</div>
-					<div class="demo-row">
-						<Badge variant="success">Success</Badge>
-						<Badge variant="primary">Primary</Badge>
-						<Badge variant="warning">Warning</Badge>
-						<Badge variant="error">Error</Badge>
-					</div>
+
+					{#if currentRegion || currentActivity || currentPreference}
+						<div class="current-selection">
+							{#if currentRegion}
+								<p><strong>Selected Region:</strong> {currentRegion}</p>
+							{/if}
+							{#if currentActivity}
+								<p><strong>Selected Activity:</strong> {currentActivity}</p>
+							{/if}
+							{#if currentPreference}
+								<p><strong>Selected Preference:</strong> {currentPreference}</p>
+							{/if}
+						</div>
+					{/if}
 				</CardContent>
 			</Card>
 		</section>
@@ -75,10 +108,21 @@
 			</div>
 		{/if}
 
+		{#if error}
+			<div class="error">
+				<p>⚠️ {error}</p>
+				<button on:click={handleSelectorChange} class="retry-button">Retry</button>
+			</div>
+		{/if}
+
 		{#if recommendations.length > 0}
-			<section class="recommendations">
-				<h3>Recommended Parks</h3>
-				<!-- Recommendation cards will be displayed here -->
+			<section class="recommendations" id="recommendations-section">
+				<h3 class="recommendations-title">Recommended Parks</h3>
+				<div class="recommendations-grid">
+					{#each recommendations as recommendation}
+						<RecommendationCard recommendation={recommendation} />
+					{/each}
+				</div>
 			</section>
 		{/if}
 	</main>
@@ -128,6 +172,34 @@
 		color: #666;
 	}
 
+	.error {
+		padding: 2rem;
+		background: #fff3cd;
+		border: 1px solid #ffc107;
+		border-radius: 8px;
+		margin-bottom: 2rem;
+		text-align: center;
+	}
+
+	.error p {
+		color: #856404;
+		margin-bottom: 1rem;
+	}
+
+	.retry-button {
+		padding: 8px 16px;
+		background: #3C5D4F;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		font-size: 14px;
+	}
+
+	.retry-button:hover {
+		background: #2a4539;
+	}
+
 	.footer {
 		text-align: center;
 		padding: 2rem 0;
@@ -139,10 +211,62 @@
 		margin-bottom: 2rem;
 	}
 
+	.selectors-section {
+		margin-bottom: 2rem;
+	}
+
+	.selectors-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.selector-item {
+		min-width: 0;
+	}
+
+	.current-selection {
+		padding: 1rem;
+		background: #f0f8ff;
+		border-radius: 8px;
+		border: 1px solid #3C5D4F;
+	}
+
+	.current-selection p {
+		margin: 0;
+		color: #212121;
+		font-size: 16px;
+	}
+
 	.demo-row {
 		display: flex;
 		gap: 0.5rem;
 		margin-bottom: 1rem;
 		align-items: center;
+	}
+
+	.recommendations {
+		margin-top: 2rem;
+	}
+
+	.recommendations-title {
+		font-size: 20px;
+		font-weight: 600;
+		color: #3C5D4F;
+		margin-bottom: 1rem;
+	}
+
+	.recommendations-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 1rem;
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 640px) {
+		.recommendations-grid {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

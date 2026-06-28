@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let class: string = '';
+	export let customClass: string = '';
 	export let size: 'sm' | 'md' | 'lg' = 'md';
 
 	const sizeClasses: Record<string, string> = {
@@ -9,6 +9,6 @@
 	};
 </script>
 
-<h3 class={sizeClasses + ' ' + class}>
+<h3 class={`${sizeClasses[size]} ${customClass}`}>
 	<slot />
 </h3>

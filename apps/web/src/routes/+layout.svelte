@@ -1,8 +1,6 @@
 <script lang="ts">
-	import '../lib/css/app.css';
-
 	// Root layout component
-	// This wraps all pages in the application and imports global styles
+	// This wraps all pages in the application
 </script>
 
 <div class="app-container">

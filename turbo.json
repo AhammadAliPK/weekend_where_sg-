@@ -19,14 +19,5 @@
     "clean": {
       "cache": false
     }
-  },
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    }
   }
 }

@@ -7,7 +7,7 @@
 	export let label = '';
 	export let disabled = false;
 	export let required = false;
-	export let class: string = '';
+	export let customClass = '';
 
 	const dispatch = createEventDispatcher();
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-	export let class: string = '';
+	export let customClass: string = '';
 </script>
 
-<div class={"p-md " + class}>
+<div class={`p-md ${customClass}`}>
 	<slot />
 </div>

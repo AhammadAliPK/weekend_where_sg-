@@ -1,0 +1,257 @@
+[
+  {
+    "id": "park-001",
+    "name": "East Coast Park",
+    "region": "East",
+    "activities": ["Cycling", "Walking", "Family outing", "Nature", "Fitness"],
+    "amenities": ["Barbecue pits", "Cycling tracks", "Beach", "Playground", "Restaurants"],
+    "description": "Singapore's most popular park with a 15km coastline, perfect for cycling, family picnics, and water sports.",
+    "signals": {
+      "activity": 3,
+      "family": 3,
+      "cycling": 3,
+      "nature": 2,
+      "fitness": 2,
+      "route": 3,
+      "kidFriendly": 3
+    }
+  },
+  {
+    "id": "park-002",
+    "name": "Singapore Botanic Gardens",
+    "region": "Central",
+    "activities": ["Walking", "Nature", "Family outing", "Fitness"],
+    "amenities": ["Walking trails", "Gardens", "Visitor center", "Café", "Botanical library"],
+    "description": "UNESCO World Heritage site featuring diverse gardens, tropical rainforest, and the famous National Orchid Garden.",
+    "signals": {
+      "activity": 2,
+      "family": 2,
+      "cycling": 0,
+      "nature": 3,
+      "fitness": 1,
+      "route": 2,
+      "kidFriendly": 2
+    }
+  },
+  {
+    "id": "park-003",
+    "name": "West Coast Park",
+    "region": "West",
+    "activities": ["Cycling", "Family outing", "Walking", "Nature"],
+    "amenities": ["Playground", "Cycling tracks", "Barbecue pits", "Wetland", "Bird watching"],
+    "description": "A 50-hectare park featuring the famous West Coast Park Playground, marsh gardens, and beautiful sunset views.",
+    "signals": {
+      "activity": 2,
+      "family": 3,
+      "cycling": 2,
+      "nature": 2,
+      "fitness": 1,
+      "route": 2,
+      "kidFriendly": 3
+    }
+  },
+  {
+    "id": "park-004",
+    "name": "Bishan-Ang Mo Kio Park",
+    "region": "Central",
+    "activities": ["Walking", "Cycling", "Family outing", "Nature"],
+    "amenities": ["River views", "Cycling tracks", "Playground", "Community gardens", "Exercise stations"],
+    "description": "One of Singapore's largest parks featuring a 3km riverine park, perfect for morning jogs and family outings.",
+    "signals": {
+      "activity": 2,
+      "family": 2,
+      "cycling": 2,
+      "nature": 2,
+      "fitness": 2,
+      "route": 2,
+      "kidFriendly": 2
+    }
+  },
+  {
+    "id": "park-005",
+    "name": "Pasir Ris Park",
+    "region": "East",
+    "activities": ["Family outing", "Cycling", "Walking", "Nature"],
+    "amenities": ["Mangrove boardwalk", "Playground", "Cycling tracks", "Barbecue pits", "Beach"],
+    "description": "A coastal park famous for its mangrove boardwalk, spacious playground, and pony rides for children.",
+    "signals": {
+      "activity": 2,
+      "family": 3,
+      "cycling": 2,
+      "nature": 2,
+      "fitness": 1,
+      "route": 2,
+      "kidFriendly": 3
+    }
+  },
+  {
+    "id": "park-006",
+    "name": "Lower Seletar Reservoir Park",
+    "region": "North",
+    "activities": ["Walking", "Cycling", "Nature", "Fitness"],
+    "amenities": ["Running tracks", "Fishing spots", "Nature trails", "Observation deck", "Fitness corner"],
+    "description": "A serene reservoir park popular among joggers, nature enthusiasts, and fishing hobbyists.",
+    "signals": {
+      "activity": 2,
+      "family": 1,
+      "cycling": 2,
+      "nature": 3,
+      "fitness": 2,
+      "route": 3,
+      "kidFriendly": 1
+    }
+  },
+  {
+    "id": "park-007",
+    "name": "Jurong Lake Gardens",
+    "region": "West",
+    "activities": ["Nature", "Walking", "Family outing", "Fitness"],
+    "amenities": ["Chinese garden", "Japanese garden", "Lake view", "Walking paths", "Boardwalk"],
+    "description": "Singapore's first national gardens project featuring thematic gardens, a lake, and stunning sunset views.",
+    "signals": {
+      "activity": 2,
+      "family": 2,
+      "cycling": 1,
+      "nature": 3,
+      "fitness": 1,
+      "route": 2,
+      "kidFriendly": 2
+    }
+  },
+  {
+    "id": "park-008",
+    "name": "Punggol Waterway Park",
+    "region": "North",
+    "activities": ["Cycling", "Walking", "Nature", "Family outing"],
+    "amenities": ["Waterway cycling", "Habitat bridges", "Exercise stations", "Playground", "Fishing spots"],
+    "description": "A modern park along Singapore's longest man-made waterway, perfect for cycling and nature walks.",
+    "signals": {
+      "activity": 2,
+      "family": 2,
+      "cycling": 3,
+      "nature": 2,
+      "fitness": 2,
+      "route": 3,
+      "kidFriendly": 2
+    }
+  },
+  {
+    "id": "park-009",
+    "name": "Fort Canning Park",
+    "region": "Central",
+    "activities": ["Walking", "Nature", "Fitness", "Family outing"],
+    "amenities": ["Historical trails", "Ancient trees", "Museum", "Event spaces", "Jogging paths"],
+    "description": "A historical park with ancient trees, colonial history, and stunning city skyline views.",
+    "signals": {
+      "activity": 2,
+      "family": 2,
+      "cycling": 0,
+      "nature": 2,
+      "fitness": 2,
+      "route": 2,
+      "kidFriendly": 2
+    }
+  },
+  {
+    "id": "park-010",
+    "name": "Changi Beach Park",
+    "region": "East",
+    "activities": ["Walking", "Cycling", "Family outing", "Nature"],
+    "amenities": ["Beach", "Barbecue pits", "Camping grounds", "Fishing", "Sunset views"],
+    "description": "A tranquil beach park perfect for camping, fishing, and watching spectacular sunsets over the sea.",
+    "signals": {
+      "activity": 2,
+      "family": 2,
+      "cycling": 2,
+      "nature": 2,
+      "fitness": 1,
+      "route": 2,
+      "kidFriendly": 1
+    }
+  },
+  {
+    "id": "park-011",
+    "name": "Sembawang Park",
+    "region": "North",
+    "activities": ["Family outing", "Walking", "Nature", "Cycling"],
+    "amenities": ["Beach", "Playground", "Jetty", "Fishing", "Barbecue pits"],
+    "description": "A family-friendly park featuring a beautiful beach, large playground, and stunning jetty views.",
+    "signals": {
+      "activity": 2,
+      "family": 3,
+      "cycling": 1,
+      "nature": 2,
+      "fitness": 1,
+      "route": 2,
+      "kidFriendly": 3
+    }
+  },
+  {
+    "id": "park-012",
+    "name": "Southern Ridges",
+    "region": "South",
+    "activities": ["Walking", "Nature", "Fitness", "Cycling"],
+    "amenities": ["Hiking trails", "Canopy walk", "Forest walk", "Observation decks", "Bird watching"],
+    "description": "A 10km trail connecting five parks across Singapore's southern ridges with stunning city and nature views.",
+    "signals": {
+      "activity": 2,
+      "family": 1,
+      "cycling": 2,
+      "nature": 3,
+      "fitness": 3,
+      "route": 3,
+      "kidFriendly": 1
+    }
+  },
+  {
+    "id": "park-013",
+    "name": "Labrador Nature Reserve",
+    "region": "South",
+    "activities": ["Nature", "Walking", "Family outing", "Fitness"],
+    "amenities": ["Secondary forest", "Coastal trail", "Historical ruins", "Bird watching", "Jogging paths"],
+    "description": "A nature reserve with secondary forests, coastal trails, and World War II historical sites.",
+    "signals": {
+      "activity": 1,
+      "family": 2,
+      "cycling": 0,
+      "nature": 3,
+      "fitness": 2,
+      "route": 2,
+      "kidFriendly": 2
+    }
+  },
+  {
+    "id": "park-014",
+    "name": "Gardens by the Bay",
+    "region": "South",
+    "activities": ["Walking", "Nature", "Family outing", "Fitness"],
+    "amenities": ["Supertree Grove", "Flower Dome", "Cloud Forest", "Gardens", "Marina Bay views"],
+    "description": "Singapore's premier garden destination with iconic Supertrees, cooled conservatories, and stunning Marina Bay views.",
+    "signals": {
+      "activity": 2,
+      "family": 3,
+      "cycling": 1,
+      "nature": 3,
+      "fitness": 1,
+      "route": 2,
+      "kidFriendly": 2
+    }
+  },
+  {
+    "id": "park-015",
+    "name": "MacRitchie Reservoir Park",
+    "region": "Central",
+    "activities": ["Walking", "Nature", "Fitness", "Cycling"],
+    "amenities": ["Reservoir trails", "Forest canopy walk", "Kayaking", "Jogging paths", "Nature boardwalk"],
+    "description": "Singapore's oldest reservoir surrounded by lush rainforest, perfect for nature walks and water sports.",
+    "signals": {
+      "activity": 2,
+      "family": 1,
+      "cycling": 2,
+      "nature": 3,
+      "fitness": 3,
+      "route": 3,
+      "kidFriendly": 1
+    }
+  }
+]
