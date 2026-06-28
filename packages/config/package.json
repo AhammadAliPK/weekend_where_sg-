@@ -1,0 +1,10 @@
+{
+  "name": "@weekend-where-sg/config",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "prettier --check .",
+    "format": "prettier --write ."
+  }
+}

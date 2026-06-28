@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Custom global styles */
+:root {
+	color-scheme: light;
+
+	/* Singapore design tokens from DESIGN.md */
+	--color-primary: #3C5D4F;
+	--color-secondary: #D4A574;
+	--color-accent: #E63946;
+	--color-success: #4CAF50;
+	--color-warning: #FF9800;
+	--color-error: #F44336;
+}
+
+/* Focus visible styles for accessibility */
+*:focus-visible {
+	outline: 2px solid #3C5D4F;
+	outline-offset: 2px;
+}
+
+/* Smooth transitions */
+* {
+	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 300ms;
+}
