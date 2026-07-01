@@ -1,0 +1,10 @@
+[build]
+buildCommand = "cd /app && pnpm install && pnpm --filter @weekend-where-sg/database build && pnpm --filter api build"
+
+[deploy]
+startCommand = "node apps/api/dist/index.js"
+healthcheckPath = "/api/health"
+restartPolicyType = "ON_FAILURE"
+
+[env]
+NODE_ENV = "production"
