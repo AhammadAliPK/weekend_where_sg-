@@ -5,7 +5,7 @@ watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
 # Minimal memory start for Railway free tier
-startCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web start"
+startCommand = "cd apps/web && NODE_ENV=production NODE_OPTIONS=--max-old-space-size=128 pnpm run start"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
