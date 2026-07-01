@@ -7,9 +7,9 @@ startCommand = "node apps/web/build/index.js"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
-# Force clean rebuild to avoid cache issues
-REBUILD = "true"
 
 [env]
 NODE_ENV = "production"
+PORT = "3000"
+HOST = "0.0.0.0"
 VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"

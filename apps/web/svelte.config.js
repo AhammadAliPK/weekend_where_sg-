@@ -6,7 +6,7 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter({
-			// Railway deployment requires these settings
+			// Railway deployment configuration
 			out: 'build',
 			precompress: false
 		}),
