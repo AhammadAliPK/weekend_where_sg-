@@ -113,7 +113,6 @@ $RECYCLE.BIN/
 *.old
 
 # Railway and deployment
-railway.toml
 wrangler.toml
 
 # Session files
