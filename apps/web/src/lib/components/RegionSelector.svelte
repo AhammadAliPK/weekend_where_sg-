@@ -7,6 +7,7 @@
 	export let customClass = '';
 
 	const regions: Region[] = ['Central', 'East', 'West', 'North', 'South'];
+	const regionIcon = '📍'; // Location pin icon for regions
 
 	let selectedRegion: Region | null = null;
 
@@ -26,6 +27,7 @@
 		options={regions}
 		bind:value={selectedRegion}
 		{label}
+		icon={regionIcon}
 		on:change={handleRegionChange}
 		required={true}
 	/>

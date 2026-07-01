@@ -1,11 +1,13 @@
 // API client utilities for WeekendWhere SG frontend
 // Part of Phase 5: Error Handling
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+import { apiConfig } from '$lib/config/env';
+
+const API_BASE_URL = apiConfig.baseUrl;
 
 export interface RecommendationResponse {
 	id: string;
-	name: string;
+	parkName: string;
 	region: string;
 	score: number;
 	verdict: string;
@@ -13,6 +15,14 @@ export interface RecommendationResponse {
 	description: string;
 	reasons: string[];
 	signals: Record<string, number | boolean>;
+	mrtStations?: Array<{
+		name: string;
+		lineCode: string;
+		walkingTimeMinutes: number;
+		distanceKm: number;
+	}>;
+	activities?: string[];
+	amenities?: string[];
 }
 
 export interface RecommendationsAPIResponse {
@@ -50,7 +60,6 @@ export async function fetchRecommendations(
 	});
 
 	const url = `${API_BASE_URL}/api/recommendations?${params.toString()}`;
-
 	const response = await fetch(url);
 
 	if (!response.ok) {

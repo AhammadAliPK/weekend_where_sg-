@@ -2,7 +2,14 @@ import { writable, derived, get } from 'svelte/store';
 import { regionStore } from './regionStore';
 import { activityStore } from './activityStore';
 import { preferenceStore } from './preferenceStore';
-import { fetchRecommendations, type RecommendationResponse } from '../api/client';
+import { fetchRecommendations as fetchFromAPI, type RecommendationResponse } from '../api/client';
+
+export interface MRTStation {
+	name: string;
+	lineCode: string;
+	walkingTimeMinutes: number;
+	distanceKm: number;
+}
 
 export interface Recommendation {
 	id: string;
@@ -14,6 +21,9 @@ export interface Recommendation {
 	description: string;
 	reasons: string[];
 	signals: Record<string, number | boolean>;
+	mrtStations?: MRTStation[];
+	activities?: string[];
+	amenities?: string[];
 }
 
 interface RecommendationsState {
@@ -40,6 +50,9 @@ const initialState: RecommendationsState = {
 // Debounce timer
 let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
+// Flag to prevent multiple simultaneous fetches
+let isFetching = false;
+
 function createRecommendationsStore() {
 	const { subscribe, set, update } = writable<RecommendationsState>(initialState);
 
@@ -58,31 +71,40 @@ function createRecommendationsStore() {
 	 * @param debounceMs - Debounce delay in milliseconds (default: 300ms)
 	 */
 	async function fetchRecommendations(request: RecommendationsRequest, debounceMs = 300): Promise<void> {
+		// Prevent multiple simultaneous fetches
+		if (isFetching) {
+			return;
+		}
+
 		// Clear existing timer
 		if (debounceTimer) {
 			clearTimeout(debounceTimer);
 		}
 
-		// Set loading state
+		// Set loading state and fetch flag
+		isFetching = true;
 		update(state => ({ ...state, loading: true, error: null }));
 
 		// Debounce the API call
 		return new Promise((resolve, reject) => {
 			debounceTimer = setTimeout(async () => {
 				try {
-					const response = await fetchRecommendations(request);
+					const response = await fetchFromAPI(request);
 
 					// Transform API response to store format
 					const recommendations: Recommendation[] = response.recommendations.map(rec => ({
 						id: rec.id,
-						parkName: rec.name,
+						parkName: rec.parkName,
 						region: rec.region,
 						score: rec.score,
 						verdict: rec.verdict,
 						activityFit: rec.activityFit,
 						description: rec.description,
 						reasons: rec.reasons,
-						signals: rec.signals
+						signals: rec.signals,
+						mrtStations: rec.mrtStations || [],
+						activities: rec.activities || [],
+						amenities: rec.amenities || []
 					}));
 
 					update(state => ({
@@ -93,6 +115,7 @@ function createRecommendationsStore() {
 						lastFetched: new Date().toISOString()
 					}));
 
+					isFetching = false;
 					resolve();
 				} catch (error) {
 					const errorMessage = error instanceof Error ? error.message : 'Failed to fetch recommendations';
@@ -102,6 +125,7 @@ function createRecommendationsStore() {
 						error: errorMessage
 					}));
 
+					isFetching = false;
 					reject(error);
 				}
 			}, debounceMs);

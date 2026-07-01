@@ -7,6 +7,7 @@
 	export let customClass = '';
 
 	const activities: Activity[] = ['Family outing', 'Walking', 'Cycling', 'Nature', 'Fitness'];
+	const activityIcon = '🎯'; // Target icon for activities
 
 	let selectedActivity: Activity | null = null;
 
@@ -26,6 +27,7 @@
 		options={activities}
 		bind:value={selectedActivity}
 		{label}
+		icon={activityIcon}
 		on:change={handleActivityChange}
 		required={true}
 	/>

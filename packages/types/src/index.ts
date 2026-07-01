@@ -14,16 +14,28 @@ export interface ParkSignals {
 	fitness?: boolean | number;        // Fitness equipment and exercise areas
 	route?: boolean | number;          // Walking/jogging routes and trails
 	kidFriendly?: boolean | number;   // Child-safe amenities and playgrounds
-	// Future signals can be added here without breaking existing code
+	wifi?: boolean | number;          // WiFi/internet availability
+	parking?: boolean | number;       // Parking availability
+	food?: boolean | number;          // Food and beverage options
+	[key: string]: boolean | number | undefined; // Allow extensible signals
+}
+
+export interface MRTStation {
+	name: string;           // Station name (e.g., "Botanic Gardens")
+	lineCode: string;       // MRT line code (e.g., "CC", "EW", "NS", "DT", "NE")
+	walkingTimeMinutes: number; // Walking time from station to park in minutes
+	distanceKm: number;     // Distance from station to park in kilometers
 }
 
 export interface Park {
+	id?: string; // Optional ID for database records
 	name: string;
 	region: string;
 	activities: string[];
 	amenities: string[];
 	description?: string;
 	signals?: ParkSignals; // Extensible signals object
+	mrtStations?: MRTStation[]; // Nearest MRT stations with walking times
 }
 
 export interface Recommendation {
@@ -33,6 +45,12 @@ export interface Recommendation {
 }
 
 export interface RecommendationRequest {
+	region: string;
+	activity: string;
+	preference: string;
+}
+
+export interface UserPreferences {
 	region: string;
 	activity: string;
 	preference: string;

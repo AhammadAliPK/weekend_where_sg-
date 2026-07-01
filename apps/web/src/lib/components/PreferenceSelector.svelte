@@ -8,39 +8,33 @@
 	import type { Preference } from '$lib/stores/preferenceStore';
 
 	export let label = 'What matters most?';
+	export let customClass = '';
 
 	const preferences: Preference[] = ['Balanced', 'Weather-safe', 'Kid-friendly', 'Long walk', 'Cycling-friendly'];
+	const preferenceIcon = '⚡'; // Lightning bolt icon for preferences
 
-	function handlePreferenceChange(event: Event) {
-		const target = event.target as HTMLSelectElement;
-		preferenceStore.setSelected(target.value as Preference);
+	let selectedPreference: Preference | null = null;
+
+	// Subscribe to store changes
+	preferenceStore.subscribe((state) => {
+		selectedPreference = state.selected;
+	});
+
+	function handlePreferenceChange(event: CustomEvent<{ value: string }>) {
+		const preference = event.detail.value as Preference;
+		preferenceStore.set(preference);
 	}
-
-	$: selectedPreference = $preferenceStore.selected;
 </script>
 
-<div class="preference-selector-wrapper">
-	<div class="select-wrapper">
-		<label for="preference-select" class="select-label">
-			{label}
-			<span class="required" aria-hidden="true">*</span>
-		</label>
-		<select
-			id="preference-select"
-			class="select-input"
-			required
-			onchange={handlePreferenceChange}
-			aria-label={label}
-			aria-required="true"
-		>
-			<option value="" disabled selected class="select-option">Select an option...</option>
-			{#each preferences as preference}
-				<option value={preference} class="select-option">
-					{preference}
-				</option>
-			{/each}
-		</select>
-	</div>
+<div class="preference-selector-wrapper" class:extra-class={customClass}>
+	<Select
+		options={preferences}
+		bind:value={selectedPreference}
+		{label}
+		icon={preferenceIcon}
+		on:change={handlePreferenceChange}
+		required={true}
+	/>
 </div>
 
 <style>

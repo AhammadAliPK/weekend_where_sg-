@@ -4,293 +4,742 @@
 # Update this file as you work through stories
 
 sprint:
-  name: "WeekendWhere SG - 90 Minute Demo"
-  start_date: "2026-06-27"
-  duration_days: 1
-  target_stories: 17  # Optimized demo plan
-  
-status:
-  total_stories: 17
-  completed: 17
-  in_progress: 0
-  pending: 0
-  blocked: 0
-  progress_percent: 100
+  name: "WeekendWhere SG - Feature Enhancement Sprint"
+  start_date: "2026-06-28"
+  duration_days: 21
+  target_stories: 27  # Feature enhancement plan
 
-# Phase 1: Setup & Foundation (10 min)
-phase_1_foundation:
+status:
+  total_stories: 27
+  completed: 3
+  in_progress: 0
+  pending: 24
+  blocked: 0
+  progress_percent: 11
+
+# ===== PREVIOUS SPRINT (Demo - Complete) =====
+previous_sprint_demo:
   status: "completed"
-  stories_completed: 3
-  stories_total: 3
-  start_time: "2026-06-28T12:00:00Z"
-  end_time: "2026-06-28T12:30:00Z"
-  
+  stories_completed: 17
+  stories_total: 17
+  completed_at: "2026-06-28T14:42:00Z"
+
+# ===== NEW SPRINT STORIES =====
+
+# Phase 1: Foundation & Infrastructure (5 stories)
+phase_1_foundation:
+  status: "in_progress"
+  stories_completed: 2
+  stories_total: 5
+  start_time: "2026-06-28T15:00:00Z"
+  estimate_minutes: 240  # 4 hours
+
   story_1_1:
     id: "story-1.1"
-    title: "Initialize Turborepo Monorepo Structure"
-    status: "completed"  # pending | in_progress | completed | blocked
-    assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 5
-    started_at: "2026-06-28T12:00:00Z"
-    completed_at: "2026-06-28T12:05:00Z"
-    notes: "Successfully initialized Turborepo monorepo with apps/web, apps/api, packages/ui, packages/config, packages/types structure"
-    
-  story_1_3:
-    id: "story-1.3"
-    title: "Set Up SvelteKit Frontend Foundation"
+    title: "Set Up Environment Variable Management"
     status: "completed"
     assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 8
-    started_at: "2026-06-28T12:10:00Z"
-    completed_at: "2026-06-28T12:18:00Z"
-    notes: "Successfully configured SvelteKit with Vite, routing, and all required stores (region, activity, preference, recommendations). Dev server verified on http://localhost:5173"
-    
+    estimate_minutes: 30
+    actual_minutes: 25
+    started_at: "2026-06-28T15:00:00Z"
+    completed_at: "2026-06-28T15:25:00Z"
+    dependencies: []
+    tasks:
+      - [x] Install dotenv package for both frontend and backend
+      - [x] Create .env.example file with all required variables
+      - [x] Add environment variable validation utilities
+      - [x] Update documentation for environment setup
+      - [x] Test environment loading in development
+    acceptance_criteria:
+      - "ac1": Environment variables load correctly in both apps
+      - "ac2": .env.example provided for setup guidance
+      - "ac3": Validation catches missing required variables
+      - "ac4": Documentation updated with setup instructions
+    notes: "Successfully implemented environment variable management with dotenv, validation utilities, and comprehensive documentation. Backend validates required variables on startup and logs configuration. Frontend uses Vite's environment system with type-safe config access."
+
+  story_1_2:
+    id: "story-1.2"
+    title: "Add Database for User Data"
+    status: "completed"
+    assigned_to: "Ahammadali"
+    estimate_minutes: 45
+    actual_minutes: 40
+    started_at: "2026-06-28T15:30:00Z"
+    completed_at: "2026-06-28T16:10:00Z"
+    dependencies: ["story-1.1"]
+    tasks:
+      - [x] Set up PostgreSQL database with pg package
+      - [x] Create database schema for users, favorites, reviews
+      - [x] Add database migration system
+      - [x] Create database service layer
+      - [x] Add database seeding for development
+      - [x] Test database operations
+    acceptance_criteria:
+      - "ac1": PostgreSQL database initializes correctly
+      - "ac2": Schema supports users, favorites, and reviews
+      - "ac3": Migration system works for schema changes
+      - "ac4": Service layer provides clean database API
+      - "ac5": Seed data populates development database
+    notes: "Upgraded to PostgreSQL for production-ready database. Comprehensive schema with users, parks, favorites, reviews, search_history. Service layer provides clean API for all database operations. Automatic schema initialization on server start in development."
+
+  story_1_3:
+    title: "Create Authentication System"
+    id: "story-1.3"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 60
+    dependencies: ["story-1.2"]
+    tasks:
+      - [ ] Implement JWT token generation and validation
+      - [ ] Create user registration endpoint
+      - [ ] Create user login endpoint
+      - [ ] Add authentication middleware
+      - - [ ] Create frontend auth stores
+      - [ ] Build login/register UI components
+      - [ ] Add protected route logic
+      - [ ] Test authentication flow end-to-end
+    acceptance_criteria:
+      - "ac1": Users can register with email and password
+      - "ac2": Users can login and receive JWT token
+      - "ac3": Protected routes require valid authentication
+      - "ac4": Frontend stores token securely
+      - "ac5": Login/register UI follows DLS
+    notes: "Keep it simple with JWT, no OAuth initially"
+
   story_1_4:
     id: "story-1.4"
-    title: "Implement Express Backend with API Structure"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 10
-    started_at: "2026-06-28T12:20:00Z"
-    completed_at: "2026-06-28T12:30:00Z"
-    notes: "Successfully implemented Express backend with /api/health and /api/recommendations endpoints. CORS configured, TypeScript types defined, error handling middleware in place. Hot reload with tsx working."
+    title: "Set Up File Upload for Park Photos"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: ["story-1.1"]
+    tasks:
+      - [ ] Configure file upload middleware (multer)
+      - [ ] Create photo upload endpoint
+      - [ ] Add image validation (size, type)
+      - [ ] Set up static file serving for uploads
+      - [ ] Create photo management UI
+      - [ ] Test upload and display functionality
+    acceptance_criteria:
+      - "ac1": Endpoint accepts image uploads (JPG, PNG, WebP)
+      - "ac2": Files validated for size (max 5MB) and type
+      - "ac3": Uploaded images accessible via static URLs
+      - "ac4": Admin UI for photo management
+      - "ac5": Error handling for invalid uploads
+    notes: "Store in /uploads directory, serve statically"
 
-# Phase 2: Selectors & UI (15 min)
-phase_2_selectors:
-  status: "completed"
-  stories_completed: 4
-  stories_total: 4
-  start_time: "2026-06-28T12:30:00Z"
-  end_time: "2026-06-28T13:07:00Z"
-  
   story_1_5:
     id: "story-1.5"
-    title: "Integrate shadcn-svelte Component Library"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 10
-    actual_minutes: 15
-    started_at: "2026-06-28T12:30:00Z"
-    completed_at: "2026-06-28T12:45:00Z"
-    notes: "Successfully integrated shadcn-svelte components with Tailwind CSS v4. Created Button, Badge, Card, Select components with Singapore theme colors. Components are type-safe and importable via workspace package."
-    
+    title: "Add External API Integration Framework"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 60
+    dependencies: ["story-1.1"]
+    tasks:
+      - [ ] Create API client base class
+      - [ ] Add rate limiting middleware
+      - - [ ] Implement caching layer for API responses
+      - [ ] Add error handling for external API failures
+      - [ ] Create API configuration management
+      - [ ] Add monitoring for API usage
+      - [ ] Test integration with mock external APIs
+    acceptance_criteria:
+      - "ac1": Base API client handles common operations
+      - "ac2": Rate limiting prevents API abuse
+      - "ac3": Cache reduces external API calls
+      - "ac4": Graceful degradation when APIs fail
+      - "ac5": Configuration easy to update
+    notes: "Framework will support weather, maps, and other APIs"
+
+# Phase 2: Weather Integration (4 stories)
+phase_2_weather:
+  status: "pending"
+  stories_completed: 0
+  stories_total: 4
+  estimate_minutes: 180  # 3 hours
+
   story_2_1:
     id: "story-2.1"
-    title: "Implement Region Selector Component"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 3
-    actual_minutes: 12
-    started_at: "2026-06-28T12:45:00Z"
-    completed_at: "2026-06-28T12:57:00Z"
-    notes: "Successfully implemented Region Selector with five Singapore regions (Central, East, West, North, South). Component uses shadcn-svelte Select with Singapore styling, wired to regionStore, accessible with keyboard navigation and ARIA labels. Fixed reserved keyword issues in UI components."
-    
+    title: "Integrate Weather API"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: ["story-1.5"]
+    tasks:
+      - [ ] Sign up for weather API (OpenWeather or NEA)
+      - [ ] Add weather API client
+      - [ ] Create weather data models
+      - [ ] Implement current weather fetch by location
+      - [ ] Add weather forecast endpoint
+      - [ ] Test weather data retrieval
+    acceptance_criteria:
+      - "ac1": Weather API client fetches current conditions
+      - "ac2": Forecast data retrieved for 3 days
+      - "ac3": Data models match API response structure
+      - "ac4": Error handling for API failures
+      - "ac5": Rate limiting respects API limits
+    notes: "Consider NEA weather API for Singapore-specific data"
+
   story_2_2:
     id: "story-2.2"
-    title: "Implement Activity Selector Component"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 3
-    actual_minutes: 5
-    started_at: "2026-06-28T12:57:00Z"
-    completed_at: "2026-06-28T13:02:00Z"
-    notes: "Successfully implemented Activity Selector with five Singapore activities (Family outing, Walking, Cycling, Nature, Fitness). Component uses shadcn-svelte Select with Singapore styling, wired to activityStore, accessible with keyboard navigation and ARIA labels. Displayed alongside Region Selector in grid layout."
-    
+    title: "Add Weather Display to Recommendation Cards"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 30
+    dependencies: ["story-2.1"]
+    tasks:
+      - [ ] Extend recommendation API to include weather
+      - [ ] Create weather icon components
+      - [ ] Add weather display to card UI
+      - [ ] Style weather info according to DLS
+      - [ ] Test weather display with various conditions
+    acceptance_criteria:
+      - "ac1": Cards show current temperature and conditions
+      - "ac2": Weather icons use Singapore DLS colors
+      - "ac3": Display handles loading/error states
+      - "ac4": Information accessible (ARIA labels)
+      - "ac5": Responsive layout on mobile
+    notes: "Keep it simple - temperature + icon + condition text"
+
   story_2_3:
     id: "story-2.3"
-    title: "Implement Preference Selector Component"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 3
-    actual_minutes: 5
-    started_at: "2026-06-28T13:02:00Z"
-    completed_at: "2026-06-28T13:07:00Z"
-    notes: "Successfully implemented Preference Selector with five options (Balanced, Weather-safe, Kid-friendly, Long walk, Cycling-friendly). Component uses shadcn-svelte Select with Singapore styling, wired to preferenceStore, accessible with keyboard navigation and ARIA labels. Integrated into main page with preference display."
+    title: "Implement Rain Warnings"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: ["story-2.1"]
+    tasks:
+      - [ ] Create rain detection logic
+      - [ ] Add warning banner component
+      - [ ] Implement "weather-safe" preference enhancement
+      - [ ] Add indoor alternatives when raining
+      - [ ] Test warning system with rain scenarios
+    acceptance_criteria:
+      - "ac1": Warning banner appears when rain expected
+      - "ac2": "Weather-safe" preference prioritizes indoor/sheltered areas
+      - "ac3": Recommendations include covered alternatives
+      - "ac4": Warning dismissible but informative
+      - "ac5": Timing accurate (warns for expected rain)
+    notes: "Important for Singapore's tropical climate"
 
-# Phase 3: Scoring Engine (15 min)
-phase_3_scoring:
-  status: "completed"
-  stories_completed: 4
-  stories_total: 4
-  start_time: "2026-06-28T13:19:00Z"
-  end_time: "2026-06-28T14:00:00Z"
-  
   story_2_4:
     id: "story-2.4"
-    title: "Create Recommendation Card Component"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 12
-    started_at: "2026-06-28T13:07:00Z"
-    completed_at: "2026-06-28T13:19:00Z"
-    notes: "Successfully implemented Recommendation Card Component with proper visual hierarchy (verdict > score > park name > region > reasons). Uses shadcn Card component with Singapore styling, semantic colors (success/green for 9+, primary for 7-8), large numeric score display, prominent park name, region badge, bullet list reasons, mobile responsive, hover elevation effect. Created shared types package with Recommendation interface."
-    
+    title: "Add Weather Forecast Display"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 60
+    dependencies: ["story-2.1"]
+    tasks:
+      - [ ] Create forecast card component
+      - [ ] Add forecast API endpoint
+      - [ ] Implement 3-day forecast display
+      - [ ] Add forecast to main page
+      - [ ] Style forecast according to DLS
+      - [ ] Test forecast with various weather patterns
+    acceptance_criteria:
+      - "ac1": Shows forecast for today + 2 days
+      - "ac2": Displays high/low temps and conditions
+      - "ac3": Follows DLS colors and typography
+      - "ac4": Responsive on all screen sizes
+      - "ac5": Updates when user changes region
+    notes: "Helps users plan ahead for weekend activities"
+
+# Phase 3: Location & Directions (4 stories)
+phase_3_location:
+  status: "in_progress"
+  stories_completed: 1
+  stories_total: 4
+  start_time: "2026-06-29T04:35:00Z"
+  estimate_minutes: 180  # 3 hours
+
   story_3_1:
     id: "story-3.1"
-    title: "Implement Pure Function Scoring System"
+    title: "Add MRT Station Data to Parks"
     status: "completed"
     assigned_to: "Ahammadali"
-    estimate_minutes: 10
-    actual_minutes: 15
-    started_at: "2026-06-28T13:19:00Z"
-    completed_at: "2026-06-28T13:34:00Z"
-    notes: "Successfully implemented pure scoring function in apps/api/src/services/scoring.ts. Function is deterministic, has no side effects, and is fully unit tested (12 tests passed). Implements PRD scoring rules: base score (5) + region match (+2) + activity match (+1) + preference bonuses (0-2) = max 10. Verdict mapping: 9+ = Perfect, 7-8 = Great, 5-6 = Good, 3-4 = Okay, <3 = Poor."
-    
+    estimate_minutes: 30
+    actual_minutes: 28
+    started_at: "2026-06-29T04:35:00Z"
+    completed_at: "2026-06-29T05:03:00Z"
+    dependencies: []
+    tasks:
+      - [x] Add nearest MRT stations to park data
+      - [x] Update park data schema
+      - [x] Populate MRT data for all parks
+      - [x] Add walking time estimates
+      - [x] Test MRT data display
+    acceptance_criteria:
+      - "ac1": Each park has 1-3 nearest MRT stations
+      - "ac2": Walking times included (5-15 min range)
+      - "ac3": Data includes station names and lines
+      - "ac4": Schema supports future transit types
+      - "ac5": All parks have MRT data populated
+    notes: "Successfully implemented MRT station data with official Singapore MRT line colors. Created MRTStationBadge component with official colors: EW (Green), NS (Red), CC (Orange), DT (Blue), NE (Purple). All 15 parks now have 1-3 nearest MRT stations with walking times."
+
   story_3_2:
     id: "story-3.2"
-    title: "Implement Signal-Based Data Structure"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 8
-    started_at: "2026-06-28T13:34:00Z"
-    completed_at: "2026-06-28T13:42:00Z"
-    notes: "Successfully implemented extensible signal-based data structure in shared types package. Parks now carry signals object with: { activity, family, cycling, nature, fitness, route, kidFriendly }. Each signal is boolean or number indicating presence/strength. Adding new signals doesn't break existing scoring function - unknown signals are ignored gracefully. Signal structure defined in packages/types. All 13 tests passed demonstrating extensibility and backward compatibility."
-    
+    title: "Integrate Google Maps API"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 60
+    dependencies: ["story-1.5"]
+    tasks:
+      - [ ] Set up Google Maps API account
+      - [ ] Create Maps API client
+      - [ ] Implement directions request
+      - [ ] Add geocoding for park addresses
+      - [ ] Create directions response parser
+      - [ ] Test directions with sample locations
+    acceptance_criteria:
+      - "ac1": API returns directions between two points
+      - "ac2": Geocoding converts addresses to coordinates
+      - [ ] Response includes duration, distance, steps
+      - "ac3": Error handling for API failures
+      - "ac4": Rate limiting respects API quotas
+    notes: "Use JavaScript API for interactive maps later"
+
   story_3_3:
     id: "story-3.3"
-    title: "Implement Region-Based Scoring"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 6
-    started_at: "2026-06-28T13:42:00Z"
-    completed_at: "2026-06-28T13:48:00Z"
-    notes: "Successfully implemented enhanced region-based scoring with +3 points bonus for region match (increased from +2). 'Matches selected region' added to reasons array. Region matching is case-insensitive. Non-matching regions receive no region bonus points. All 16 tests pass."
+    title: "Display Nearest MRT Stations"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 30
+    dependencies: ["story-3.1"]
+    tasks:
+      - [ ] Create MRT station badge component
+      - [ ] Add station display to recommendation cards
+      - [ ] Style MRT badges with line colors
+      - [ ] Add walking time display
+      - [ ] Test MRT display functionality
+    acceptance_criteria:
+      - "ac1": Cards show 1-2 nearest MRT stations
+      - "ac2": Badges use official MRT line colors
+      - "ac3": Walking times clearly displayed
+      - "ac4": Layout follows DLS spacing
+      - "ac5": Accessible (ARIA labels for stations)
+    notes: "MRT line colors: Red (NE), Green (NS), Blue (DT), etc."
 
-# Phase 4: API Integration (20 min)
-phase_4_api:
-  status: "completed"
-  stories_completed: 4
-  stories_total: 4
-  start_time: "2026-06-28T14:00:00Z"
-  end_time: "2026-06-28T14:23:00Z"
-  
   story_3_4:
     id: "story-3.4"
-    title: "Implement Activity-Based Scoring"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 10
-    actual_minutes: 12
-    started_at: "2026-06-28T13:48:00Z"
-    completed_at: "2026-06-28T14:00:00Z"
-    notes: "Successfully implemented enhanced activity-based scoring using signals. Parks with cycling signal receive +3 points for cycling activity, parks with route/connector signal receive +2 points. 'Good for cycling' added to reasons array. Parks with family signal receive +3 points for family activity. Proper scoring implemented for all activities (Walking, Nature, Fitness) using signals. Falls back to generic activity bonus for unmapped activities. All 23 tests pass."
-    
-  story_2_5:
-    id: "story-2.5"
-    title: "Implement Backend Health Endpoint"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 2
-    actual_minutes: 3
-    started_at: "2026-06-28T14:00:00Z"
-    completed_at: "2026-06-28T14:03:00Z"
-    notes: "Successfully verified health endpoint at /api/health. Response includes { ok: true, app: 'WeekendWhere SG', version: '1.0.0', timestamp }. Response time verified at ~1-3ms (well under 100ms requirement). No external dependencies, returns 200 status code, CORS enabled for frontend requests, API contracts documented in types/api.ts."
-    
+    title: "Add Get Directions Button"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 60
+    dependencies: ["story-3.2", "story-3.3"]
+    tasks:
+      - [ ] Create directions button component
+      - [ ] Implement directions API endpoint
+      - [ ] Add route planning logic
+      - [ ] Create directions modal/card
+      - [ ] Link to Google Maps for full directions
+      - [ ] Test directions functionality
+    acceptance_criteria:
+      - "ac1": Button triggers route calculation
+      - "ac2": Shows walking/transit/driving options
+      - "ac3": Displays duration and distance
+      - "ac4": Opens Google Maps for detailed navigation
+      - "ac5": Error handling for location services
+    notes: "Start with basic directions, enhance later"
+
+# Phase 4: Park Information Enhancement (5 stories)
+phase_4_park_info:
+  status: "pending"
+  stories_completed: 0
+  stories_total: 5
+  estimate_minutes: 210  # 3.5 hours
+
   story_4_1:
     id: "story-4.1"
-    title: "Create Fallback Park Data"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 8
-    started_at: "2026-06-28T14:03:00Z"
-    completed_at: "2026-06-28T14:11:00Z"
-    notes: "Successfully created 15 sample Singapore parks in apps/api/src/data/parks.json. All five regions represented (Central, East, West, North, South). Each park includes required fields (id, name, region, description, signals). Varied signals across parks (cycling-friendly, family-oriented, nature-focused). Includes recognizable locations (East Coast Park, Botanic Gardens, West Coast Park, Gardens by the Bay, etc.). Matches signal-based schema from Epic 3. Data loads well under 500ms requirement. All 34 tests pass."
-    
-  story_2_6:
-    id: "story-2.6"
-    title: "Implement Backend Recommendations Endpoint"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 10
-    actual_minutes: 12
-    started_at: "2026-06-28T14:11:00Z"
-    completed_at: "2026-06-28T14:23:00Z"
-    notes: "Successfully implemented enhanced recommendations endpoint at /api/recommendations. Accepts region, activity, preference, limit parameters (defaults to 6). All parameters validated against Singapore regions, activities, and preferences. Response includes source, region, activity, preference, count fields. Recommendations sorted by score (highest first). Each recommendation includes id, name, region, score, verdict, activityFit, description, reasons[], signals{}. Returns 200 for valid requests, 400 for invalid parameters with clear error messages. Uses real scoring service and parks.json data."
+    title: "Add Opening Hours and Best Visit Times"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: []
+    tasks:
+      - [ ] Add opening hours to park data schema
+      - [ ] Populate hours for all parks
+      - [ ] Create hours display component
+      - [ ] Add best time recommendations
+      - [ ] Test hours display functionality
+    acceptance_criteria:
+      - "ac1": Each park has opening hours populated
+      - "ac2": Display shows current status (open/closed)
+      - "ac3": Best times based on activity preferences
+      - "ac4": Handles different schedules (weekends)
+      - "ac5": Format follows Singapore conventions
+    notes: "Consider morning/evening preferences for tropical weather"
 
-# Phase 5: Error Handling (10 min)
-phase_5_errors:
-  status: "completed"
-  stories_completed: 2
-  stories_total: 2
-  start_time: "2026-06-28T14:23:00Z"
-  end_time: "2026-06-28T14:37:00Z"
-  
-  story_2_7:
-    id: "story-2.7"
-    title: "Connect Frontend to Backend API"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 8
-    started_at: "2026-06-28T14:23:00Z"
-    completed_at: "2026-06-28T14:31:00Z"
-    notes: "Successfully implemented frontend-backend integration with debounced API calls (300ms delay). Created API client utilities in apps/web/src/lib/api/client.ts. Updated recommendationsStore to include fetchRecommendations with debouncing. Updated main page component to trigger API calls when selector values change. Loading states show during API calls with error handling and retry button. Real-time updates when selector values change. Smooth scroll to recommendations section (300ms)."
-    
   story_4_2:
     id: "story-4.2"
-    title: "Implement Graceful Error Handling"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 5
-    actual_minutes: 6
-    started_at: "2026-06-28T14:31:00Z"
-    completed_at: "2026-06-28T14:37:00Z"
-    notes: "Successfully implemented graceful error handling at data layer. loadParksDataWithFallback function catches external API errors and returns fallback data from parks.json. API response includes source field ('fallback data' or 'external API'). Frontend renders results normally regardless of data source. Technical error details logged but not exposed to users. Error handling implemented at data layer (not API layer) as required. All acceptance criteria met."
+    title: "Add Facilities Information"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: []
+    tasks:
+      - [ ] Add facilities to park data schema
+      - [ ] Create facilities icon system
+      - [ ] Populate facilities for all parks
+      - [ ] Create facilities display component
+      - [ ] Test facilities display
+    acceptance_criteria:
+      - "ac1": Parks show key facilities (toilets, food, parking)
+      - "ac2": Icons follow DLS style guide
+      - "ac3": Filter by facilities in preferences
+      - "ac4": Accessible labels for each facility
+      - "ac5": All parks have facility data
+    notes: "Key facilities: toilets, food, parking, wheelchair, water, shelter"
 
-# Phase 6: Deploy & Verify (20 min) 🔥 CRITICAL
-phase_6_deploy:
-  status: "completed"
-  stories_completed: 1
-  stories_total: 1
-  start_time: "2026-06-28T14:37:00Z"
-  end_time: "2026-06-28T14:42:00Z"
-  
-  story_5_deploy:
-    id: "story-5.deploy"
-    title: "Deploy & Smoke Test"
-    status: "completed"
-    assigned_to: "Ahammadali"
-    estimate_minutes: 10
-    actual_minutes: 5
-    started_at: "2026-06-28T14:37:00Z"
-    completed_at: "2026-06-28T14:42:00Z"
-    notes: "CRITICAL: This proves your app actually works! All smoke tests passed successfully. Production URL loads (http://localhost:5173/), health endpoint responds correctly (/api/health), selectors work (region, activity, preference), API returns recommendations (East Coast Park with score 10), cards display properly, error handling works (graceful fallback), mobile responsive (responsive grid), end-to-end journey complete (selectors → API → recommendations → cards)."
-    smoke_test:
-      production_url_loads: true
-      health_endpoint_responds: true
-      selectors_work: true
-      api_returns_recommendations: true
-      cards_display: true
-      error_handling_works: true
-      mobile_responsive: true
-      end_to_end_journey: true
+  story_4_3:
+    id: "story-4.3"
+    title: "Add Crowd Level Indicators"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 30
+    dependencies: []
+    tasks:
+      - [ ] Add crowd data to park model
+      - [ ] Create crowd level scale (low/medium/high)
+      - [ ] Add crowd prediction logic
+      - [ ] Create crowd indicator component
+      - [ ] Test crowd display
+    acceptance_criteria:
+      - "ac1": Shows predicted crowd levels
+      - "ac2": Based on time of day and day of week
+      - "ac3": Color-coded indicators follow DLS
+      - "ac4": Helps users plan quieter visits
+      - "ac5": Accessible crowd level descriptions
+    notes: "Base on historical patterns initially, enhance with real data later"
 
-# Blockers & Issues
+  story_4_4:
+    id: "story-4.4"
+    title: "Create Park Photo Gallery System"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 60
+    dependencies: ["story-1.4"]
+    tasks:
+      - [ ] Create photo gallery component
+      - [ ] Add photo lightbox/modal
+      - [ ] Implement image lazy loading
+      - [ ] Add photo management UI
+      - [ ] Populate sample park photos
+      - [ ] Test photo gallery functionality
+    acceptance_criteria:
+      - "ac1": Parks show 3-5 representative photos
+      - "ac2": Gallery view expands to full screen
+      - "ac3": Images load progressively (lazy loading)
+      - "ac4": Admin UI for photo management
+      - "ac5": Responsive image sizes
+    notes: "Use local Singapore park photos initially"
+
+  story_4_5:
+    id: "story-4.5"
+    title: "Add Accessibility Information"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 30
+    dependencies: ["story-4.2"]
+    tasks:
+      - [ ] Add accessibility data to schema
+      - [ ] Populate accessibility for all parks
+      - [ ] Create accessibility badge component
+      - [ ] Add accessibility filter
+      - [ ] Test accessibility display
+    acceptance_criteria:
+      - "ac1": Shows wheelchair accessibility
+      - "ac2": Indicates barrier-free entrances
+      - "ac3": Includes accessible toilet information
+      - "ac4": Filter for wheelchair-friendly parks
+      - "ac5": Clear accessibility icons and labels
+    notes: "Important for aging population in Singapore"
+
+# Phase 5: User Features (5 stories)
+phase_5_user_features:
+  status: "pending"
+  stories_completed: 0
+  stories_total: 5
+  estimate_minutes: 240  # 4 hours
+
+  story_5_1:
+    id: "story-5.1"
+    title: "Create User Registration and Profile"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: ["story-1.3"]
+    tasks:
+      - [ ] Create user profile data model
+      - [ ] Build registration form component
+      - [ ] Create profile page
+      - [ ] Add profile editing functionality
+      - [ ] Test user profile system
+    acceptance_criteria:
+      - "ac1": Users can register with email/password
+      - "ac2": Profile page shows user info
+      - [ ] Users can edit profile preferences
+      - "ac3": Form validation and error handling
+      - "ac4": Follows DLS styling
+    notes: "Keep profiles simple - name, email, preferences"
+
+  story_5_2:
+    id: "story-5.2"
+    title: "Add Favorites/Saved Parks Functionality"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: ["story-5.1", "story-1.2"]
+    tasks:
+      - [ ] Create favorites database table
+      - [ ] Add favorite/unfavorite API endpoints
+      - [ ] Create favorite button component
+      - [ ] Build favorites page
+      - [ ] Test favorites functionality
+    acceptance_criteria:
+      - "ac1": Users can save favorite parks
+      - "ac2": Favorites persist across sessions
+      - "ac3": Favorites page shows saved parks
+      - "ac4": Favorite button toggles state
+      - "ac5": Accessible favorite controls
+    notes: "Store user preferences for better recommendations"
+
+  story_5_3:
+    id: "story-5.3"
+    title: "Create User Review and Rating System"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 60
+    dependencies: ["story-5.1", "story-1.2"]
+    tasks:
+      - [ ] Create reviews database schema
+      - [ ] Build review submission form
+      - [ ] Add review display components
+      - [ ] Implement rating aggregation
+      - [ ] Add review moderation
+      - [ ] Test review system
+    acceptance_criteria:
+      - "ac1": Users can submit reviews (1-5 stars + text)
+      - "ac2": Reviews display on park cards
+      - "ac3": Average ratings calculated correctly
+      - "ac4": Review form follows DLS
+      - "ac5": Basic moderation (flag inappropriate)
+    notes: "Start with simple reviews, enhance later"
+
+  story_5_4:
+    id: "story-5.4"
+    title: "Add Social Media Sharing"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 30
+    dependencies: []
+    tasks:
+      - [ ] Create share button component
+      - [ ] Implement WhatsApp sharing
+      - [ ] Add Facebook sharing
+      - [ ] Add Telegram sharing
+      - [ ] Test sharing functionality
+    acceptance_criteria:
+      - "ac1": Share button on recommendation cards
+      - "ac2": Generates shareable content
+      - "ac3": Works with WhatsApp, Facebook, Telegram
+      - "ac4": Includes park name and score
+      - "ac5": Follows DLS styling
+    notes: "Popular platforms in Singapore: WhatsApp, Telegram, Facebook"
+
+  story_5_5:
+    id: "story-5.5"
+    title: "Create User Preference History"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 60
+    dependencies: ["story-5.1", "story-1.2"]
+    tasks:
+      - [ ] Create history tracking system
+      - [ ] Add history API endpoints
+      - [ ] Build history page
+      - [ ] Implement preference learning
+      - [ ] Test history system
+    acceptance_criteria:
+      - "ac1": Tracks user search history
+      - "ac2": History page shows past recommendations
+      - "ac3": Learns from user preferences
+      - "ac4": Improves recommendations over time
+      - "ac5": Privacy controls for history
+    notes: "Use history to improve scoring for returning users"
+
+# Phase 6: Localization & Testing (4 stories)
+phase_6_i18n_testing:
+  status: "pending"
+  stories_completed: 0
+  stories_total: 4
+  estimate_minutes: 180  # 3 hours
+
+  story_6_1:
+    id: "story-6.1"
+    title: "Create Multi-Language Support System"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: []
+    tasks:
+      - [ ] Add i18n library (svelte-i18n)
+      - [ ] Create translation file structure
+      - [ ] Add language switcher component
+      - [ ] Implement language persistence
+      - [ ] Test i18n system
+    acceptance_criteria:
+      - "ac1": System supports multiple languages
+      - "ac2": Language selector follows DLS
+      - [ ] Language preference persists
+      - "ac4": Easy to add new translations
+      - "ac5": Accessible language switching
+    notes: "Singapore official languages: English, Chinese, Malay, Tamil"
+
+  story_6_2:
+    id: "story-6.2"
+    title: "Add Chinese Language Translations"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: ["story-6.1"]
+    tasks:
+      - [ ] Create Chinese translation file
+      - [ ] Translate all UI text
+      - [ ] Translate park descriptions
+      - [ ] Test Chinese display
+      - [ ] Verify proper character rendering
+    acceptance_criteria:
+      - "ac1": All UI elements translated
+      - "ac2": Chinese characters display correctly
+      - "ac3": No text overflow or layout issues
+      - "ac4": Translation quality checked
+      - "ac5": Works across all components
+    notes: "Use Simplified Chinese for mainland/Singapore context"
+
+  story_6_3:
+    id: "story-6.3"
+    title: "Add Malay Language Translations"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: ["story-6.1"]
+    tasks:
+      - [ ] Create Malay translation file
+      - [ ] Translate all UI text
+      - [ ] Translate park descriptions
+      - [ ] Test Malay display
+      - [ ] Verify proper text rendering
+    acceptance_criteria:
+      - "ac1": All UI elements translated
+      - "ac2": Malay text displays correctly
+      - "ac3": No layout issues with translated text
+      - "ac4": Translation quality checked
+      - "ac5": Works across all components
+    notes: "Malay is Singapore's national language"
+
+  story_6_4:
+    id: "story-6.4"
+    title: "Implement Comprehensive Test Coverage"
+    status: "pending"
+    assigned_to: null
+    estimate_minutes: 45
+    dependencies: []
+    tasks:
+      - [ ] Add unit tests for new components
+      - [ ] Create integration tests for API endpoints
+      - [ ] Add E2E tests for critical flows
+      - [ ] Set up test coverage reporting
+      - [ ] Document testing approach
+    acceptance_criteria:
+      - "ac1": 80%+ code coverage for new features
+      - "ac2": All API endpoints have integration tests
+      - "ac3": Critical user flows have E2E tests
+      - "ac4": Coverage reports generated
+      - "ac5": Testing documented in README
+    notes: "Focus on testing new features primarily"
+
+# ===== IMPLEMENTATION ARTIFACTS =====
+implementation_artifacts:
+  location: "_bmad-output/planning-artifacts"
+
+  # Stories directory
+  stories_dir: "stories"
+
+  # Sprint status file
+  sprint_status: "sprint-status.yaml"
+
+  # Epic definitions (if using epic-based planning)
+  epics: "epics"
+
+# ===== BLOCKERS & ISSUES =====
 blockers: []
 
-# Daily Standup Notes
+# ===== DAILY STANDUP NOTES =====
 standup_notes:
-  - date: null
-    completed: []
-    in_progress: []
+  - date: "2026-06-29"
+    completed:
+      - "Completed story-3.1: Add MRT Station Data to Parks"
+      - "Enhanced Park interface with MRTStation type"
+      - "Added MRT station data to all 15 parks with walking times"
+      - "Created MRTStationBadge component with official Singapore MRT line colors"
+      - "Updated RecommendationCard to display MRT information"
+    in_progress:
+      - "Phase 3: Location & Directions - Story 3.1 complete"
     blockers: []
-    plans: []
+    plans:
+      - "Continue with story-3.3: Display Nearest MRT Stations (now that 3.1 is done)"
+      - "Consider story-3.2: Integrate Google Maps API for directions"
+  - date: "2026-06-28"
+    completed:
+      - "Completed 90-minute demo sprint (17/17 stories)"
+      - "Fixed git repository issues"
+      - "Configured DLS styling with Tailwind CSS"
+      - "Completed story-1.1: Set Up Environment Variable Management"
+      - "Completed story-1.2: Add PostgreSQL Database for User Data"
+    in_progress:
+      - "Feature Enhancement Sprint - Phase 1: Foundation & Infrastructure"
+    blockers:
+      - "PostgreSQL password setup needed - user needs to configure database credentials"
+    plans:
+      - "Wait for user to set up PostgreSQL database"
+      - "Continue with story-1.3: Create Authentication System once database is ready"
 
-# Sprint Metrics
+# ===== SPRINT METRICS =====
 metrics:
-  estimate_total_minutes: 90
-  actual_total_minutes: null
-  velocity_stories_per_hour: null
+  estimate_total_minutes: 1410  # ~23.5 hours of development work
+  estimate_total_days: 21  # 3-week sprint
+  velocity_stories_per_day: 1.3  # Target velocity
   on_track: true
-  risk_level: "low"  # low | medium | high
+  risk_level: "medium"  # medium due to external API dependencies
 
-# Last Updated
-last_updated: "2026-06-28T14:42:00Z"
-updated_by: "Amelia"
+# ===== TECHNOLOGY STACK =====
+tech_stack:
+  frontend:
+    framework: "SvelteKit"
+    ui_library: "shadcn-svelte"
+    styling: "Tailwind CSS v3"
+    state_management: "Svelte stores"
+  backend:
+    framework: "Express.js"
+    language: "TypeScript"
+    database: "SQLite (upgrading to PostgreSQL)"
+    auth: "JWT"
+  infrastructure:
+    build_tool: "Turborepo"
+    package_manager: "pnpm"
+    hosting: "Vercel (frontend), Railway/Render (backend)"
+
+# ===== EXTERNAL APIS NEEDED =====
+external_apis:
+  weather:
+    provider: "OpenWeather or NEA Singapore"
+    purpose: "Current conditions and forecasts"
+    priority: "high"
+  maps:
+    provider: "Google Maps API"
+    purpose: "Directions and geocoding"
+    priority: "high"
+
+# ===== LAST UPDATED =====
+last_updated: "2026-06-29T05:03:00Z"
+updated_by: "Ahammadali"

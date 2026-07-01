@@ -11,19 +11,31 @@
     "format": "prettier --write .",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "db:migrate": "node scripts/run-migration.js migrate",
+    "db:schema": "node scripts/run-migration.js schema",
+    "db:seed": "node scripts/run-migration.js seed",
+    "db:reset": "node scripts/run-migration.js reset",
+    "db:create": "node scripts/create-db.js",
+    "db:setup": "node scripts/run-migration.js migrate"
   },
   "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/pg": "^8.20.0",
     "@weekend-where-sg/config": "workspace:*",
+    "@weekend-where-sg/database": "workspace:*",
     "@weekend-where-sg/types": "workspace:*",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.0"
+    "express": "^4.18.0",
+    "pg": "^8.22.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.0",
+    "@types/dotenv": "^8.2.3",
     "@types/express": "^4.17.0",
     "@types/node": "^20.0.0",
+    "dotenv": "^16.0.0",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0",
     "vitest": "^4.1.9"

@@ -14,7 +14,12 @@
       "fitness": 2,
       "route": 3,
       "kidFriendly": 3
-    }
+    },
+    "mrtStations": [
+      { "name": "Bedok", "lineCode": "EW", "walkingTimeMinutes": 12, "distanceKm": 1.2 },
+      { "name": "Kembangan", "lineCode": "EW", "walkingTimeMinutes": 15, "distanceKm": 1.5 },
+      { "name": "Paya Lebar", "lineCode": "EW", "walkingTimeMinutes": 18, "distanceKm": 1.8 }
+    ]
   },
   {
     "id": "park-002",
@@ -31,7 +36,12 @@
       "fitness": 1,
       "route": 2,
       "kidFriendly": 2
-    }
+    },
+    "mrtStations": [
+      { "name": "Botanic Gardens", "lineCode": "CC", "walkingTimeMinutes": 5, "distanceKm": 0.4 },
+      { "name": "Botanic Gardens", "lineCode": "DT", "walkingTimeMinutes": 8, "distanceKm": 0.6 },
+      { "name": "Farrer Road", "lineCode": "CC", "walkingTimeMinutes": 10, "distanceKm": 0.8 }
+    ]
   },
   {
     "id": "park-003",
@@ -48,7 +58,12 @@
       "fitness": 1,
       "route": 2,
       "kidFriendly": 3
-    }
+    },
+    "mrtStations": [
+      { "name": "Clementi", "lineCode": "EW", "walkingTimeMinutes": 15, "distanceKm": 1.5 },
+      { "name": "Kent Ridge", "lineCode": "CC", "walkingTimeMinutes": 18, "distanceKm": 1.8 },
+      { "name": "Haw Par Villa", "lineCode": "CC", "walkingTimeMinutes": 20, "distanceKm": 2.0 }
+    ]
   },
   {
     "id": "park-004",
@@ -65,7 +80,12 @@
       "fitness": 2,
       "route": 2,
       "kidFriendly": 2
-    }
+    },
+    "mrtStations": [
+      { "name": "Bishan", "lineCode": "CC", "walkingTimeMinutes": 8, "distanceKm": 0.8 },
+      { "name": "Bishan", "lineCode": "NS", "walkingTimeMinutes": 10, "distanceKm": 1.0 },
+      { "name": "Ang Mo Kio", "lineCode": "NS", "walkingTimeMinutes": 12, "distanceKm": 1.2 }
+    ]
   },
   {
     "id": "park-005",
@@ -82,7 +102,12 @@
       "fitness": 1,
       "route": 2,
       "kidFriendly": 3
-    }
+    },
+    "mrtStations": [
+      { "name": "Pasir Ris", "lineCode": "EW", "walkingTimeMinutes": 10, "distanceKm": 1.0 },
+      { "name": "Tampines", "lineCode": "EW", "walkingTimeMinutes": 15, "distanceKm": 1.5 },
+      { "name": "Tampines", "lineCode": "DT", "walkingTimeMinutes": 18, "distanceKm": 1.8 }
+    ]
   },
   {
     "id": "park-006",
@@ -99,7 +124,12 @@
       "fitness": 2,
       "route": 3,
       "kidFriendly": 1
-    }
+    },
+    "mrtStations": [
+      { "name": "Yishun", "lineCode": "NS", "walkingTimeMinutes": 12, "distanceKm": 1.2 },
+      { "name": "Khatib", "lineCode": "NS", "walkingTimeMinutes": 15, "distanceKm": 1.5 },
+      { "name": "Yio Chu Kang", "lineCode": "NS", "walkingTimeMinutes": 18, "distanceKm": 1.8 }
+    ]
   },
   {
     "id": "park-007",
@@ -116,7 +146,12 @@
       "fitness": 1,
       "route": 2,
       "kidFriendly": 2
-    }
+    },
+    "mrtStations": [
+      { "name": "Lakeside", "lineCode": "EW", "walkingTimeMinutes": 10, "distanceKm": 1.0 },
+      { "name": "Boon Lay", "lineCode": "EW", "walkingTimeMinutes": 12, "distanceKm": 1.2 },
+      { "name": "Chinese Garden", "lineCode": "EW", "walkingTimeMinutes": 8, "distanceKm": 0.8 }
+    ]
   },
   {
     "id": "park-008",
@@ -133,7 +168,12 @@
       "fitness": 2,
       "route": 3,
       "kidFriendly": 2
-    }
+    },
+    "mrtStations": [
+      { "name": "Punggol", "lineCode": "NE", "walkingTimeMinutes": 8, "distanceKm": 0.8 },
+      { "name": "Cove", "lineCode": "PTC", "walkingTimeMinutes": 10, "distanceKm": 1.0 },
+      { "name": "Samudera", "lineCode": "PTC", "walkingTimeMinutes": 12, "distanceKm": 1.2 }
+    ]
   },
   {
     "id": "park-009",
@@ -150,7 +190,12 @@
       "fitness": 2,
       "route": 2,
       "kidFriendly": 2
-    }
+    },
+    "mrtStations": [
+      { "name": "Dhoby Ghaut", "lineCode": "NS", "walkingTimeMinutes": 8, "distanceKm": 0.8 },
+      { "name": "Dhoby Ghaut", "lineCode": "CC", "walkingTimeMinutes": 8, "distanceKm": 0.8 },
+      { "name": "Fort Canning", "lineCode": "DT", "walkingTimeMinutes": 5, "distanceKm": 0.5 }
+    ]
   },
   {
     "id": "park-010",
@@ -167,7 +212,12 @@
       "fitness": 1,
       "route": 2,
       "kidFriendly": 1
-    }
+    },
+    "mrtStations": [
+      { "name": "Changi Airport", "lineCode": "CG", "walkingTimeMinutes": 20, "distanceKm": 2.0 },
+      { "name": "Expo", "lineCode": "CG", "walkingTimeMinutes": 25, "distanceKm": 2.5 },
+      { "name": "Tanah Merah", "lineCode": "EW", "walkingTimeMinutes": 18, "distanceKm": 1.8 }
+    ]
   },
   {
     "id": "park-011",
@@ -184,7 +234,12 @@
       "fitness": 1,
       "route": 2,
       "kidFriendly": 3
-    }
+    },
+    "mrtStations": [
+      { "name": "Sembawang", "lineCode": "NS", "walkingTimeMinutes": 15, "distanceKm": 1.5 },
+      { "name": "Canberra", "lineCode": "NS", "walkingTimeMinutes": 18, "distanceKm": 1.8 },
+      { "name": "Yishun", "lineCode": "NS", "walkingTimeMinutes": 20, "distanceKm": 2.0 }
+    ]
   },
   {
     "id": "park-012",
@@ -201,7 +256,12 @@
       "fitness": 3,
       "route": 3,
       "kidFriendly": 1
-    }
+    },
+    "mrtStations": [
+      { "name": "HarbourFront", "lineCode": "NE", "walkingTimeMinutes": 12, "distanceKm": 1.2 },
+      { "name": "Telok Blangah", "lineCode": "CC", "walkingTimeMinutes": 10, "distanceKm": 1.0 },
+      { "name": "Pasir Panjang", "lineCode": "CC", "walkingTimeMinutes": 15, "distanceKm": 1.5 }
+    ]
   },
   {
     "id": "park-013",
@@ -218,7 +278,12 @@
       "fitness": 2,
       "route": 2,
       "kidFriendly": 2
-    }
+    },
+    "mrtStations": [
+      { "name": "HarbourFront", "lineCode": "NE", "walkingTimeMinutes": 8, "distanceKm": 0.8 },
+      { "name": "Pasir Panjang", "lineCode": "CC", "walkingTimeMinutes": 12, "distanceKm": 1.2 },
+      { "name": "Labrador Park", "lineCode": "CC", "walkingTimeMinutes": 5, "distanceKm": 0.5 }
+    ]
   },
   {
     "id": "park-014",
@@ -235,7 +300,12 @@
       "fitness": 1,
       "route": 2,
       "kidFriendly": 2
-    }
+    },
+    "mrtStations": [
+      { "name": "Bayfront", "lineCode": "CE", "walkingTimeMinutes": 8, "distanceKm": 0.8 },
+      { "name": "Bayfront", "lineCode": "DT", "walkingTimeMinutes": 8, "distanceKm": 0.8 },
+      { "name": "Marina Bay", "lineCode": "CE", "walkingTimeMinutes": 12, "distanceKm": 1.2 }
+    ]
   },
   {
     "id": "park-015",
@@ -252,6 +322,11 @@
       "fitness": 3,
       "route": 3,
       "kidFriendly": 1
-    }
+    },
+    "mrtStations": [
+      { "name": "Caldecott", "lineCode": "CC", "walkingTimeMinutes": 12, "distanceKm": 1.2 },
+      { "name": "Marymount", "lineCode": "CC", "walkingTimeMinutes": 15, "distanceKm": 1.5 },
+      { "name": "Thomson", "lineCode": "DT", "walkingTimeMinutes": 18, "distanceKm": 1.8 }
+    ]
   }
 ]

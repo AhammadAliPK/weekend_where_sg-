@@ -1,26 +1,126 @@
 # Dependencies
 node_modules/
 **/node_modules/
+.pnpm-store/
 
 # Build outputs
 .turbo/
 **/.svelte-kit/
+**/dist/
+**/build/
 apps/web/build/
 apps/api/dist/
+packages/database/dist/
 
-# IDE
-.claude/settings.local.json
-.vscode/
-.idea/
+# TypeScript
+*.tsbuildinfo
+*.d.ts.map
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.*.local
 
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Environment
-.env
-.env.local
-
-# OS
+# OS and IDE
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Claude AI
+.claude/settings.local.json
+.claude/memory/
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Misc
+*.pid
+*.seed
+*.pid.lock
+.lock-writer
+
+# Vite
+*.vite.config.js.timestamp-*
+vite.config.js.timestamp-*
+
+# Svelte
+.svelte-kit/
+.svelte/
+
+# Turbo
+.turbo/
+
+# Office temp files
+~$*
+*.tmp
+*.temp
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads and storage
+uploads/
+storage/
+temp/
+
+# Build artifacts
+*.tsbuildinfo
+*.d.ts.map
+coverage/
+
+# Package manager
+.pnpm-store/
+.yarn/
+.yarn/cache/
+.npm/
+
+# MacOS
+.AppleDouble
+.LSOverride
+
+# Windows
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Railway and deployment
+railway.toml
+wrangler.toml
+
+# Session files
+*.session
+
+# Cache
+.cache/
+.parcel-cache/
+.next/
+out/

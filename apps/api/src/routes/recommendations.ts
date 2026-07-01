@@ -65,6 +65,12 @@ router.get('/', (req: Request, res: Response) => {
 		// Load parks data with graceful error handling
 		const { parks, source } = loadParksDataWithFallback(false);
 
+		// First, filter parks by selected region
+		const regionFilteredParks = parks.filter(park => park.region === request.region);
+
+		// If no parks found in the selected region, return all parks (fallback behavior)
+		const parksToScore = regionFilteredParks.length > 0 ? regionFilteredParks : parks;
+
 		// Score parks using the scoring service
 		const userPreferences = {
 			region: request.region,
@@ -72,21 +78,24 @@ router.get('/', (req: Request, res: Response) => {
 			preference: request.preference
 		};
 
-		const scoredRecommendations = scoreParks(parks, userPreferences);
+		const scoredRecommendations = scoreParks(parksToScore, userPreferences);
 
 		// Apply limit and transform to response format
 		const limitedRecommendations = scoredRecommendations
 			.slice(0, request.limit)
 			.map(rec => ({
 				id: rec.park.id || `park-${rec.park.name.toLowerCase().replace(/\s+/g, '-')}`,
-				name: rec.park.name,
+				parkName: rec.park.name,
 				region: rec.park.region,
 				score: rec.score,
 				verdict: rec.score >= 9 ? 'Perfect' : rec.score >= 7 ? 'Great' : rec.score >= 5 ? 'Good' : rec.score >= 3 ? 'Okay' : 'Poor',
 				activityFit: rec.park.activities.includes(request.activity) ? 'Excellent' : 'Good',
 				description: rec.park.description || '',
 				reasons: rec.reasons,
-				signals: rec.park.signals || {}
+				signals: rec.park.signals || {},
+				activities: rec.park.activities || [],
+				amenities: rec.park.amenities || [],
+				mrtStations: rec.park.mrtStations || []
 			}));
 
 		// Build response matching API contract

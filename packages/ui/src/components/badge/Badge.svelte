@@ -2,6 +2,7 @@
 	export let variant: 'success' | 'primary' | 'secondary' | 'warning' | 'error' | 'neutral' = 'primary';
 	export let size: 'sm' | 'md' = 'md';
 	export let customClass: string = '';
+	export let overrideVariant: boolean = false; // Allow complete style override
 
 	const variantClasses: Record<string, string> = {
 		success: 'bg-success text-white',
@@ -17,11 +18,9 @@
 		md: 'px-3 py-1 text-sm rounded-badge'
 	};
 
-	$: classes = `
-		${variantClasses[variant]} ${sizeClasses[size]}
-		font-medium rounded-badge inline-flex items-center
-		${customClass}
-	`;
+	$: classes = overrideVariant
+		? `${sizeClasses[size]} ${customClass} font-medium rounded-badge inline-flex items-center`
+		: `${variantClasses[variant]} ${sizeClasses[size]} ${customClass} font-medium rounded-badge inline-flex items-center`;
 </script>
 
 <span class={classes}>

@@ -17,6 +17,7 @@
     "./select": "./src/components/select/index.ts",
     "./card": "./src/components/card/index.ts",
     "./button": "./src/components/button/index.ts",
-    "./badge": "./src/components/badge/index.ts"
+    "./badge": "./src/components/badge/index.ts",
+    "./mrt-station-badge": "./src/components/mrt-station-badge/index.ts"
   }
 }

@@ -10,14 +10,26 @@ export default {
 				// Singapore design tokens from DESIGN.md
 				primary: {
 					DEFAULT: '#3C5D4F', // Singapore green
+					light: '#5A7A68', // Lighter garden green
+					dark: '#2A4138', // Deep rainforest green
 					foreground: '#FFFFFF'
 				},
 				secondary: {
 					DEFAULT: '#D4A574', // Warm accent
+					light: '#E5C4A0',
+					dark: '#B88D5A',
 					foreground: '#FFFFFF'
 				},
 				accent: {
-					DEFAULT: '#E63946', // Attention red
+					DEFAULT: '#E63946', // Attention red (Singapore flag)
+					light: '#FF6B6B',
+					dark: '#C12937',
+					foreground: '#FFFFFF'
+				},
+				orchid: {
+					DEFAULT: '#9B5DE5', // National orchid purple
+					light: '#B79CF0',
+					dark: '#7D4BB5',
 					foreground: '#FFFFFF'
 				},
 				success: '#4CAF50',

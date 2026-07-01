@@ -65,8 +65,8 @@ describe('Data Loader', () => {
 			const parks = loadParksData();
 
 			// Check that parks have different signal strengths
-			const cyclingSignals = parks.map(park => park.signals?.cycling || 0);
-			const natureSignals = parks.map(park => park.signals?.nature || 0);
+			const cyclingSignals = parks.map(park => typeof park.signals?.cycling === 'number' ? park.signals.cycling : 0);
+			const natureSignals = parks.map(park => typeof park.signals?.nature === 'number' ? park.signals.nature : 0);
 
 			// Should have variety in signal strengths
 			expect(Math.max(...cyclingSignals)).toBeGreaterThan(0);
