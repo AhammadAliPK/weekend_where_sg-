@@ -3,7 +3,7 @@
 // Part of Phase 3: Scoring Engine
 
 import type { Park, Recommendation, ParkSignals } from '@weekend-where-sg/types';
-import type { ScoringResult, UserPreferences } from './types';
+import type { ScoringResult, UserPreferences } from './types.js';
 
 /**
  * Pure scoring function that calculates park scores based on user preferences

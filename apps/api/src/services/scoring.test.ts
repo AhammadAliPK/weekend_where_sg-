@@ -3,7 +3,7 @@
 // Part of Phase 3: Scoring Engine
 
 import { describe, it, expect } from 'vitest';
-import { scorePark, scoreParks, demonstrateSignalExtensibility } from './scoring';
+import { scorePark, scoreParks, demonstrateSignalExtensibility } from './scoring.js';
 import type { Park, UserPreferences, ParkSignals } from '@weekend-where-sg/types';
 
 describe('Scoring Service - Signal-Based Implementation', () => {

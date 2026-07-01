@@ -3,7 +3,7 @@
 // Part of Phase 4: API Integration
 
 import { describe, it, expect } from 'vitest';
-import { loadParksData, getParksByRegion, getParkById, getUniqueRegions } from './dataLoader';
+import { loadParksData, getParksByRegion, getParkById, getUniqueRegions } from './dataLoader.js';
 
 describe('Data Loader', () => {
 	describe('loadParksData', () => {

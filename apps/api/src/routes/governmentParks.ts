@@ -4,7 +4,7 @@
  */
 
 import { Router } from 'express';
-import { fetchParksFromGovAPI } from '../utils/govDataFetcher';
+import { fetchParksFromGovAPI } from '../utils/govDataFetcher.js';
 
 const router = Router();
 
