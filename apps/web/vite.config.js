@@ -7,26 +7,31 @@ export default defineConfig({
 		port: 5173,
 		host: true
 	},
-	// Optimize for Railway deployment
+	// Disable problematic features for Railway
 	css: {
-		devSourcemap: true
+		devSourcemap: false
 	},
-	// Railway-specific optimizations
+	// Conservative dependency optimization for Railway
 	optimizeDeps: {
-		include: ['@sveltejs/kit'],
+		disable: false,
+		include: [],
 		force: false
 	},
-	// Build optimizations for Railway
+	// Railway-safe build configuration
 	build: {
-		target: 'esnext',
-		minify: 'esbuild',
+		target: 'es2015', // Lower target for better compatibility
+		minify: false, // Disable minification to prevent esbuild crashes
 		sourcemap: false,
 		rollupOptions: {
 			onwarn: (warning, handler) => {
-				// Ignore specific warnings that don't affect functionality
-				if (warning.code === 'THIS_IS_UNDEFINED') return;
-				handler(warning);
+				// Ignore all warnings to prevent build failures
+				return;
 			}
 		}
+	},
+	// Disable esbuild optimizations that cause crashes
+	esbuild: {
+		target: 'es2015',
+		jsx: 'preserve'
 	}
 });

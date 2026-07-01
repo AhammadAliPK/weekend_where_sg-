@@ -10,7 +10,9 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "bundler",
+		"ignoreDeprecations": "6.0",
 		"baseUrl": ".",
+		"types": ["node"],
 		"paths": {
 			"$lib": ["./src/lib"],
 			"$lib/*": ["./src/lib/*"],

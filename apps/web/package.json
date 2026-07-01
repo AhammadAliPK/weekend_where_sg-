@@ -24,6 +24,7 @@
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@tsconfig/svelte": "^5.0.0",
+    "@types/node": "^20.0.0",
     "autoprefixer": "^10.5.2",
     "lucide-svelte": "^1.0.1",
     "postcss": "^8.5.15",

@@ -3,16 +3,54 @@
  * Provides type-safe access to Vite environment variables
  */
 
+// TypeScript declaration for Vite environment variables
+interface ImportMetaEnv {
+	readonly VITE_API_URL?: string;
+	readonly VITE_APP_NAME?: string;
+	readonly VITE_APP_VERSION?: string;
+	readonly VITE_ENABLE_WEATHER?: string;
+	readonly VITE_ENABLE_MRT?: string;
+	readonly VITE_ENABLE_DIRECTIONS?: string;
+	readonly VITE_ENABLE_REVIEWS?: string;
+	readonly VITE_ENABLE_FAVORITES?: string;
+	readonly DEV?: boolean;
+	readonly PROD?: boolean;
+	// Allow dynamic property access for environment variables
+	[key: string]: any;
+}
+
+// Extend the global ImportMeta interface
+declare global {
+	interface ImportMeta {
+		readonly env: ImportMetaEnv;
+	}
+}
+
 /**
  * Gets a Vite environment variable with type safety
+ * Supports both build-time (import.meta.env) and runtime (process.env) variables
  * @param key Environment variable name (without VITE_ prefix)
  * @param defaultValue Default value if not found
  * @returns Environment variable value or default
  */
 export function getEnv(key: string, defaultValue: string = ''): string {
 	const fullKey = `VITE_${key}`;
-	const value = import.meta.env[fullKey];
-	return value || defaultValue;
+
+	// Try import.meta.env first (build-time variables)
+	try {
+		if (import.meta.env[fullKey]) {
+			return import.meta.env[fullKey] || defaultValue;
+		}
+	} catch {
+		// import.meta.env not available, fall through to process.env
+	}
+
+	// Fallback to process.env for runtime variables (Railway deployment)
+	if (typeof process !== 'undefined' && process.env && process.env[fullKey]) {
+		return process.env[fullKey] || defaultValue;
+	}
+
+	return defaultValue;
 }
 
 /**
@@ -42,8 +80,8 @@ export const appConfig = {
 	enableFavorites: getEnvBoolean('ENABLE_FAVORITES', true),
 
 	// Development mode
-	isDevelopment: import.meta.env.DEV,
-	isProduction: import.meta.env.PROD,
+	isDevelopment: import.meta.env?.DEV || false,
+	isProduction: import.meta.env?.PROD || false,
 } as const;
 
 /**
