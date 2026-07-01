@@ -3,7 +3,7 @@ buildCommand = "pnpm install && pnpm --filter @weekend-where-sg/ui build && pnpm
 watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
-startCommand = "node apps/web/build/handler.js"
+startCommand = "node apps/web/build/index.js"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import mobile optimizations - must be early */
+@import '../styles/mobile-optimizations.css';
+
 /* Custom global styles */
 :root {
 	color-scheme: light;
@@ -28,5 +31,3 @@
 	transition-duration: 300ms;
 }
 
-/* Import mobile optimizations */
-@import '../styles/mobile-optimizations.css';
