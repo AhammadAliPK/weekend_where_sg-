@@ -28,7 +28,7 @@ export interface MRTStation {
 }
 
 export interface Park {
-	id?: string; // Optional ID for database records
+	id?: string; // Park ID (optional for compatibility)
 	name: string;
 	region: string;
 	activities: string[];

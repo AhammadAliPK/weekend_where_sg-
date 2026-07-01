@@ -104,7 +104,6 @@ export interface SearchHistory {
 }
 
 export interface ParkWithDetails extends Park {
-	id?: string;
 	opening_hours?: Record<string, any>;
 	facilities?: string[];
 	accessibility?: Record<string, any>;
