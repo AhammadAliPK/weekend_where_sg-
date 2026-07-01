@@ -3,10 +3,11 @@ buildCommand = "pnpm install && pnpm --filter @weekend-where-sg/ui build && pnpm
 watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
-startCommand = "node apps/web/build/index.js"
+startCommand = "node apps/web/build/handler.js"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
 
 [env]
 NODE_ENV = "production"
+VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"
