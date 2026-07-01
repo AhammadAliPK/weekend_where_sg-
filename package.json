@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "build:all": "pnpm build && pnpm --filter @weekend-where-sg/database build && pnpm --filter api build && pnpm --filter web build",
+    "build:api": "pnpm --filter @weekend-where-sg/database build && pnpm --filter api build",
+    "build:web": "pnpm --filter web build",
     "test": "turbo run test",
     "lint": "turbo run lint",
     "format": "turbo run format",

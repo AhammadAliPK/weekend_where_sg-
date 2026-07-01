@@ -14,14 +14,14 @@ dotenv.config();
 // Validate environment variables
 try {
 	validateEnv();
-} catch (error) {
+} catch (error: unknown) {
 	console.error('Environment validation failed:', error);
 	process.exit(1);
 }
 
 // Initialize database (only in development)
 if (isDevelopment()) {
-	initializeDatabase().catch((error) => {
+	initializeDatabase().catch((error: unknown) => {
 		console.error('Failed to initialize database:', error);
 		// Don't exit, let the server start anyway
 	});
