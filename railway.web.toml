@@ -1,9 +1,11 @@
 [build]
-buildCommand = "pnpm install && pnpm --filter @weekend-where-sg/ui build && pnpm --filter web build"
+# Ultra memory-optimized build for Railway free tier
+buildCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm install --ignore-scripts && NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web build"
 watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
-startCommand = "pnpm --filter web start"
+# Minimal memory start for Railway free tier
+startCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web start"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
@@ -13,3 +15,4 @@ NODE_ENV = "production"
 PORT = "3000"
 HOST = "0.0.0.0"
 VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"
+NODE_OPTIONS = "--max-old-space-size=128"
