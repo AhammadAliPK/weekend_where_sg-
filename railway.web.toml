@@ -10,3 +10,4 @@ healthcheckPath = "/"
 [env]
 NODE_ENV = "production"
 VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"
+RAILPACK_SPA_OUTPUT_DIR = "apps/web/build"
