@@ -1,18 +1,14 @@
 [build]
-# Ultra memory-optimized build for Railway free tier
+# Ultra memory-optimized build for Railway free tier with static adapter
 buildCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm install --ignore-scripts && NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web build"
 watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
-# Minimal memory start for Railway free tier
-startCommand = "cd apps/web && NODE_ENV=production NODE_OPTIONS=--max-old-space-size=128 pnpm run start"
+# Railway will serve static files from apps/web/build directory
+# No Node.js server needed - Railway serves static content directly
 healthcheckPath = "/"
 healthcheckTimeout = 300
-restartPolicyType = "ON_FAILURE"
 
 [env]
 NODE_ENV = "production"
-PORT = "3000"
-HOST = "0.0.0.0"
 VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"
-NODE_OPTIONS = "--max-old-space-size=128"
