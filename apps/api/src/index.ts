@@ -31,6 +31,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+// @ts-ignore - CORS callback signature issue in Railway TypeScript compiler
 app.use(cors({
 	origin: (origin, callback) => {
 		// Allow requests with no origin (like mobile apps, curl, etc.)
