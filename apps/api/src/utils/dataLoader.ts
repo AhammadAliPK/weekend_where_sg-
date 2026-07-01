@@ -2,7 +2,7 @@
 // Part of Phase 5: Error Handling
 
 import type { Park } from '@weekend-where-sg/types';
-import parksData from '../data/parks.json';
+import parksData from '../data/parks.json' with { type: 'json' };
 
 /**
  * Load parks data from JSON file with graceful error handling
