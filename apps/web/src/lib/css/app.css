@@ -22,6 +22,20 @@ html {
 	--color-error: #F44336;
 }
 
+/* App container */
+.app-container {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Global body styles */
+body {
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
 /* Focus visible styles for accessibility */
 *:focus-visible {
 	outline: 2px solid #3C5D4F;
@@ -33,5 +47,15 @@ html {
 	transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
 	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	transition-duration: 300ms;
+}
+
+/* Custom animations */
+@keyframes pulse {
+	0%, 100% { opacity: 0.2; transform: scale(1); }
+	50% { opacity: 0.3; transform: scale(1.05); }
+}
+
+.animate-pulse {
+	animation: pulse 4s ease-in-out infinite;
 }
 

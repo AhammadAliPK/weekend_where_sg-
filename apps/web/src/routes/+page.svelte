@@ -306,21 +306,3 @@
 		</div>
 	</footer>
 </div>
-
-<style>
-	/* Custom animations for modern feel */
-	@keyframes pulse {
-		0%, 100% { opacity: 0.2; transform: scale(1); }
-		50% { opacity: 0.3; transform: scale(1.05); }
-	}
-
-	.animate-pulse {
-		animation: pulse 4s ease-in-out infinite;
-	}
-
-	/* Modern focus states */
-	*:focus-visible {
-		outline: 2px solid #10b981;
-		outline-offset: 2px;
-	}
-</style>
