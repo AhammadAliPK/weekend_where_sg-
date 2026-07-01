@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "commonjs",
+    "module": "ES2022",
     "lib": ["ES2022", "DOM"],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -14,10 +14,7 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@weekend-where-sg/database": ["../../packages/database/src"],
-      "@weekend-where-sg/types": ["../../packages/types/src"],
-      "@weekend-where-sg/config": ["../../packages/config/src"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src/**/*"],

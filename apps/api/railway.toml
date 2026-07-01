@@ -1,6 +1,6 @@
 [build]
-# Install dependencies and build database package first, then API
-buildCommand = "pnpm install && ls -la packages/database/ && pnpm --filter @weekend-where-sg/database build && ls -la packages/database/dist/ && pnpm --filter api build"
+# Build all workspace packages together to ensure proper linking
+buildCommand = "pnpm install && pnpm run build --filter=@weekend-where-sg/database --filter=api"
 
 [deploy]
 startCommand = "node apps/api/dist/index.js"
