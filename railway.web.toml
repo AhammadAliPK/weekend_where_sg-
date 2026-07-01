@@ -1,9 +1,9 @@
 [build]
-buildCommand = "pnpm install && turbo run build"
+buildCommand = "cd apps/web && pnpm install && pnpm run build"
 watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
-startCommand = "cd apps/web && NODE_ENV=production node build/index.js"
+startCommand = "cd apps/web && pnpm run start"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
