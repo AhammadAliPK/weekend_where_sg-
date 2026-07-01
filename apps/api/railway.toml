@@ -1,5 +1,5 @@
 [build]
-buildCommand = "cd /app && pnpm install && pnpm --filter @weekend-where-sg/database build && pnpm --filter api build"
+buildCommand = "pnpm install --ignore-scripts && pnpm --filter @weekend-where-sg/database build --silent && pnpm --filter api build --silent"
 
 [deploy]
 startCommand = "node apps/api/dist/index.js"
@@ -8,3 +8,4 @@ restartPolicyType = "ON_FAILURE"
 
 [env]
 NODE_ENV = "production"
+NODE_OPTIONS = "--max-old-space-size=256"
