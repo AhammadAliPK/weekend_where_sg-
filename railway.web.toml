@@ -3,11 +3,12 @@
 buildCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm install --ignore-scripts && NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web build"
 
 [deploy]
-# Production static file server via Express
-# Railway will run: pnpm --filter web start -> node server.cjs
+# Railway native static serving - no server needed
+startCommand = ""
 healthcheckPath = "/"
 
 [env]
 NODE_ENV = "production"
 VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"
+RAILPACK_STATIC_DIR = "apps/web/build"
 RAILPACK_SPA_OUTPUT_DIR = "apps/web/build"
