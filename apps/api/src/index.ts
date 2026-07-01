@@ -32,10 +32,8 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 // Configure CORS to allow multiple origins
-const allowedOrigins = [
-	'http://localhost:5173',
-	'http://localhost:3000',
-	'http://localhost:8080',
+const allowedOrigins: RegExp[] = [
+	/^http:\/\/localhost:\d+$/, // Match localhost with any port
 	/.+\.railway\.app$/ // Match all Railway.app domains
 ];
 
