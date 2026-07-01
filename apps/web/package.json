@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "develop": "vite dev",
-    "start": "node build/index.js",
+    "start": "node server.cjs",
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -17,6 +17,7 @@
     "@sveltejs/kit": "^2.68.0",
     "@weekend-where-sg/types": "workspace:*",
     "@weekend-where-sg/ui": "workspace:*",
+    "express": "^4.18.0",
     "svelte": "^4.2.0"
   },
   "devDependencies": {

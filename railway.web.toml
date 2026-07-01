@@ -3,8 +3,8 @@
 buildCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm install --ignore-scripts && NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web build"
 
 [deploy]
-# For Railway Static service - point to build directory
-# Change service type to "Static" in Railway settings
+# Production static file server via Express
+# Railway will run: pnpm --filter web start -> node server.cjs
 healthcheckPath = "/"
 
 [env]
