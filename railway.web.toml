@@ -1,11 +1,10 @@
 [build]
 # Ultra memory-optimized build for Railway free tier with static adapter
 buildCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm install --ignore-scripts && NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web build"
-watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
-# Railway will serve static files from apps/web/build directory
-# No Node.js server needed - Railway serves static content directly
+# Use serve to host static files from build directory
+startCommand = "npx serve apps/web/build -s -l 3000"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 
