@@ -13,10 +13,13 @@ const __dirname = dirname(__filename);
 
 // Try different path resolutions for different environments
 const possiblePaths = [
-	join(__dirname, '../data/parks.json'),           // Normal build
-	join(__dirname, 'data/parks.json'),             // Direct path
+	join(__dirname, '../../data/parks.json'),        // From dist/utils to dist/data
+	join(__dirname, '../data/parks.json'),          // From dist to dist/data
+	join(__dirname, 'data/parks.json'),            // Direct path
+	join(process.cwd(), 'dist/data/parks.json'),   // Railway: from root to dist/data
 	join(process.cwd(), 'apps/api/src/data/parks.json'), // Development
-	join(process.cwd(), 'apps/api/dist/data/parks.json') // Railway build
+	join(process.cwd(), 'apps/api/dist/data/parks.json'), // Alternative Railway
+	join(process.cwd(), 'src/data/parks.json')     // Alternative development
 ];
 
 let parksData: Park[] = [];
