@@ -4,6 +4,7 @@
   "private": true,
   "description": "WeekendWhere SG - Singapore park recommendations app",
   "scripts": {
+    "start": "pnpm --filter web start",
     "dev": "turbo run dev",
     "build": "pnpm --filter @weekend-where-sg/database build && turbo run build",
     "build:all": "pnpm build && pnpm --filter @weekend-where-sg/database build && pnpm --filter api build && pnpm --filter web build",
