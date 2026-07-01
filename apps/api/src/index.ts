@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-	origin: (origin: string | undefined, callback: (err: Error | null, allowed: boolean) => void) => {
+	origin: (origin, callback) => {
 		// Allow requests with no origin (like mobile apps, curl, etc.)
 		if (!origin) return callback(null, true);
 
