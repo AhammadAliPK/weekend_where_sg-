@@ -6,5 +6,13 @@ export default defineConfig({
 	server: {
 		port: 5173,
 		host: true
+	},
+	// Optimize CSS processing for Railway deployment
+	css: {
+		devSourcemap: true
+	},
+	// Ensure proper parsing of Svelte files
+	optimizeDeps: {
+		include: ['@sveltejs/kit']
 	}
 });

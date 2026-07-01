@@ -7,6 +7,8 @@ startCommand = "node apps/web/build/index.js"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
+# Force clean rebuild to avoid cache issues
+REBUILD = "true"
 
 [env]
 NODE_ENV = "production"

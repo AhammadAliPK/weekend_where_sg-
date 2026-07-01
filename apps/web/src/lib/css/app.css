@@ -6,6 +6,10 @@
 @tailwind utilities;
 
 /* Custom global styles */
+html {
+	scroll-behavior: smooth;
+}
+
 :root {
 	color-scheme: light;
 

@@ -309,18 +309,13 @@
 
 <style>
 	/* Custom animations for modern feel */
-@keyframes pulse {
+	@keyframes pulse {
 		0%, 100% { opacity: 0.2; transform: scale(1); }
 		50% { opacity: 0.3; transform: scale(1.05); }
 	}
 
 	.animate-pulse {
 		animation: pulse 4s ease-in-out infinite;
-	}
-
-	/* Smooth scrolling */
-html {
-		scroll-behavior: smooth;
 	}
 
 	/* Modern focus states */
