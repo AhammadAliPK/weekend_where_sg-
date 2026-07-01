@@ -1,9 +1,9 @@
 [build]
-buildCommand = "pnpm install && NODE_OPTIONS=--max-old-space-size=1024 pnpm --filter @weekend-where-sg/ui build && NODE_OPTIONS=--max-old-space-size=1024 pnpm --filter web build"
+buildCommand = "pnpm install && turbo run build"
 watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
-startCommand = "cd apps/web && NODE_ENV=production NODE_OPTIONS=--max-old-space-size=1024 node build/index.js"
+startCommand = "cd apps/web && NODE_ENV=production node build/index.js"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
@@ -11,6 +11,4 @@ restartPolicyType = "ON_FAILURE"
 [env]
 NODE_ENV = "production"
 PORT = "3000"
-HOST = "0.0.0.0"
 VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"
-NODE_OPTIONS = "--max-old-space-size=1024"
