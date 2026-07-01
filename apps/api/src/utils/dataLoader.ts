@@ -2,11 +2,42 @@
 // Part of Phase 5: Error Handling
 
 import type { Park } from '@weekend-where-sg/types';
-// @ts-ignore - Import assertion required for Railway, works with esbuild locally
-import parksDataFile from '../data/parks.json' with { type: 'json' };
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { existsSync } from 'fs';
 
-// Load JSON data at import time
-const parksData: Park[] = parksDataFile;
+// Load JSON data synchronously (works with both esbuild and Railway)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Try different path resolutions for different environments
+const possiblePaths = [
+	join(__dirname, '../data/parks.json'),           // Normal build
+	join(__dirname, 'data/parks.json'),             // Direct path
+	join(process.cwd(), 'apps/api/src/data/parks.json'), // Development
+	join(process.cwd(), 'apps/api/dist/data/parks.json') // Railway build
+];
+
+let parksData: Park[] = [];
+let loadedPath = '';
+
+for (const path of possiblePaths) {
+	if (existsSync(path)) {
+		try {
+			const rawData = readFileSync(path, 'utf-8');
+			parksData = JSON.parse(rawData);
+			loadedPath = path;
+			break;
+		} catch (error) {
+			console.error(`Failed to load parks data from ${path}:`, error);
+		}
+	}
+}
+
+if (parksData.length === 0) {
+	console.error('Could not load parks data from any path:', possiblePaths);
+}
 
 /**
  * Load parks data from JSON file with graceful error handling
