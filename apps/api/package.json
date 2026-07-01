@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "pnpm --filter @weekend-where-sg/database build && tsc",
     "start": "node dist/index.js",
     "lint": "prettier --check .",
     "format": "prettier --write .",
