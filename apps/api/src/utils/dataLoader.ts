@@ -2,7 +2,15 @@
 // Part of Phase 5: Error Handling
 
 import type { Park } from '@weekend-where-sg/types';
-import parksData from '../data/parks.json' with { type: 'json' };
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Load JSON data synchronously (works with esbuild)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const parksDataPath = join(__dirname, '../data/parks.json');
+const parksData: Park[] = JSON.parse(readFileSync(parksDataPath, 'utf-8'));
 
 /**
  * Load parks data from JSON file with graceful error handling
