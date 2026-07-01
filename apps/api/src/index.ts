@@ -31,29 +31,16 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-// @ts-ignore - CORS callback signature issue in Railway TypeScript compiler
+// Configure CORS to allow multiple origins
+const allowedOrigins = [
+	'http://localhost:5173',
+	'http://localhost:3000',
+	'http://localhost:8080',
+	/.+\.railway\.app$/ // Match all Railway.app domains
+];
+
 app.use(cors({
-	origin: (origin, callback) => {
-		// Allow requests with no origin (like mobile apps, curl, etc.)
-		if (!origin) return callback(null, true);
-
-		// Allow localhost for development
-		if (origin.includes('localhost')) return callback(null, true);
-
-		// Allow Railway web app
-		if (origin.includes('railway.app')) return callback(null, true);
-
-		// Allow specific frontend URL from env
-		const allowedOrigins = process.env.FRONTEND_URL?.split(',') || [];
-		if (allowedOrigins.includes(origin)) return callback(null, true);
-
-		// Allow all in development, specific in production
-		if (process.env.NODE_ENV === 'development') {
-			return callback(null, true);
-		}
-
-		callback(new Error('Not allowed by CORS'), false);
-	},
+	origin: allowedOrigins,
 	credentials: true
 }));
 app.use(express.json());
