@@ -1,9 +1,9 @@
 [build]
-buildCommand = "cd apps/web && pnpm install && pnpm run build"
+buildCommand = "pnpm install && pnpm --filter @weekend-where-sg/ui build && pnpm --filter web build"
 watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
-startCommand = "cd apps/web && pnpm run start"
+startCommand = "pnpm --filter web start"
 healthcheckPath = "/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"
@@ -11,4 +11,5 @@ restartPolicyType = "ON_FAILURE"
 [env]
 NODE_ENV = "production"
 PORT = "3000"
+HOST = "0.0.0.0"
 VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"
