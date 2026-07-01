@@ -7,12 +7,26 @@ export default defineConfig({
 		port: 5173,
 		host: true
 	},
-	// Optimize CSS processing for Railway deployment
+	// Optimize for Railway deployment
 	css: {
 		devSourcemap: true
 	},
-	// Ensure proper parsing of Svelte files
+	// Railway-specific optimizations
 	optimizeDeps: {
-		include: ['@sveltejs/kit']
+		include: ['@sveltejs/kit'],
+		force: false
+	},
+	// Build optimizations for Railway
+	build: {
+		target: 'esnext',
+		minify: 'esbuild',
+		sourcemap: false,
+		rollupOptions: {
+			onwarn: (warning, handler) => {
+				// Ignore specific warnings that don't affect functionality
+				if (warning.code === 'THIS_IS_UNDEFINED') return;
+				handler(warning);
+			}
+		}
 	}
 });

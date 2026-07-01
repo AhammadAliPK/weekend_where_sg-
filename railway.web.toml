@@ -1,5 +1,5 @@
 [build]
-buildCommand = "pnpm install && pnpm --filter @weekend-where-sg/ui build && pnpm --filter web build"
+buildCommand = "pnpm install && NODE_OPTIONS=--max-old-space-size=512 pnpm --filter @weekend-where-sg/ui build && NODE_OPTIONS=--max-old-space-size=512 pnpm --filter web build"
 watchPaths = ["apps/web/**", "packages/ui/**", "packages/types/**"]
 
 [deploy]
@@ -13,3 +13,4 @@ NODE_ENV = "production"
 PORT = "3000"
 HOST = "0.0.0.0"
 VITE_API_URL = "https://api-production-8b0d.up.railway.app/api"
+NODE_OPTIONS = "--max-old-space-size=512"
