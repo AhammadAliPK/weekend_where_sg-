@@ -13,7 +13,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/kit": "^2.68.0",
     "@weekend-where-sg/types": "workspace:*",
     "@weekend-where-sg/ui": "workspace:*",
     "svelte": "^4.2.0"
