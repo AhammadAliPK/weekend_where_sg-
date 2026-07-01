@@ -87,6 +87,9 @@ importers:
       '@weekend-where-sg/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      express:
+        specifier: ^4.18.0
+        version: 4.18.0
       svelte:
         specifier: ^4.2.0
         version: 4.2.0
