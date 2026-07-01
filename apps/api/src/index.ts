@@ -32,7 +32,27 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-	origin: process.env.FRONTEND_URL || 'http://localhost:*',
+	origin: (origin, callback) => {
+		// Allow requests with no origin (like mobile apps, curl, etc.)
+		if (!origin) return callback(null, true);
+
+		// Allow localhost for development
+		if (origin.includes('localhost')) return callback(null, true);
+
+		// Allow Railway web app
+		if (origin.includes('railway.app')) return callback(null, true);
+
+		// Allow specific frontend URL from env
+		const allowedOrigins = process.env.FRONTEND_URL?.split(',') || [];
+		if (allowedOrigins.includes(origin)) return callback(null, true);
+
+		// Allow all in development, specific in production
+		if (process.env.NODE_ENV === 'development') {
+			return callback(null, true);
+		}
+
+		callback(new Error('Not allowed by CORS'));
+	},
 	credentials: true
 }));
 app.use(express.json());
