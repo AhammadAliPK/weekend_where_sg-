@@ -1,9 +1,9 @@
+/* Import mobile optimizations - must come first before @tailwind */
+@import '../../styles/mobile-optimizations.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import mobile optimizations - must be early */
-@import '../styles/mobile-optimizations.css';
 
 /* Custom global styles */
 :root {
