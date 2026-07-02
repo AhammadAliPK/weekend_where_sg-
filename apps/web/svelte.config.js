@@ -10,8 +10,7 @@ const config = {
 			assets: 'build',
 			fallback: 'index.html',
 			precompress: false,
-			strict: true,
-			base: '/waaha'
+			strict: true
 		}),
 		alias: {
 			$lib: 'src/lib',
