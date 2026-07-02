@@ -10,15 +10,14 @@ const config = {
 			assets: 'build',
 			fallback: 'index.html',
 			precompress: false,
-			strict: true
+			strict: true,
+			base: '/waaha'
 		}),
 		alias: {
 			$lib: 'src/lib',
 			$app: 'src/app'
 		}
-	},
-	// Add base path for deployment at akoniacodex.com/waaha
-	base: '/waaha'
+	}
 };
 
 export default config;
