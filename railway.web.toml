@@ -1,6 +1,6 @@
 [build]
 # Ultra memory-optimized build for Railway free tier with static adapter
-buildCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm install --ignore-scripts && NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web build --force"
+buildCommand = "NODE_OPTIONS=--max-old-space-size=128 pnpm install --ignore-scripts && NODE_OPTIONS=--max-old-space-size=128 pnpm --filter web build"
 
 [deploy]
 # Railway native static serving - no server needed

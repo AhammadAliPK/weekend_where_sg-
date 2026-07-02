@@ -16,9 +16,7 @@ const config = {
 			$lib: 'src/lib',
 			$app: 'src/app'
 		}
-	},
-	// This tells SvelteKit it's running at /waaha path
-	base: '/waaha'
+	}
 };
 
 export default config;
