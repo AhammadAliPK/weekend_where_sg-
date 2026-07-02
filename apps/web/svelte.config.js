@@ -16,7 +16,9 @@ const config = {
 			$lib: 'src/lib',
 			$app: 'src/app'
 		}
-	}
+	},
+	// Configure base path for deployment at /waaha
+	base: '/waaha'
 };
 
 export default config;
