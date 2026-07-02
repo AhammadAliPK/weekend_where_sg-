@@ -16,7 +16,9 @@ const config = {
 			$lib: 'src/lib',
 			$app: 'src/app'
 		}
-	}
+	},
+	// Add base path for deployment at akoniacodex.com/waaha
+	base: '/waaha'
 };
 
 export default config;
