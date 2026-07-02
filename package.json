@@ -14,7 +14,7 @@
     "lint": "turbo run lint",
     "format": "turbo run format",
     "clean": "turbo run clean",
-    "web": "pnpm --filter web dev",
+    "web": "pnpm --filter web develop",
     "api": "pnpm --filter api dev"
   },
   "devDependencies": {
