@@ -31,12 +31,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-// Configure CORS to allow multiple origins
-const allowedOrigins: RegExp[] = [
-	/^http:\/\/localhost:\d+$/, // Match localhost with any port
-	/.+\.railway\.app$/ // Match all Railway.app domains
-];
 
+	// Configure CORS to allow multiple origins
+	const allowedOrigins: RegExp[] = [
+		/^http:\/\/localhost:\d+$/, // Match localhost with any port
+		/.+\.railway\.app$/, // Match all Railway.app domains
+		/.+\.akoniacodex\.com$/ // Match all akoniacodex.com subdomains
+	];
 app.use(cors({
 	origin: allowedOrigins,
 	credentials: true
